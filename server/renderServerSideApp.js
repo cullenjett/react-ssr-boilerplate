@@ -1,20 +1,25 @@
 import React from 'react';
-import { renderToStaticMarkup } from 'react-dom/server';
+import { render } from 'rapscallion';
 import { StaticRouter } from 'react-router-dom';
 
 import IndexHtml from '../src/IndexHtml';
 import Layout from '../src/components/Layout';
 
 const renderServerSideApp = (req, res) => {
-  const markup = renderToStaticMarkup(
+  res.writeHead(200, {
+    'Content-Type': 'text/html',
+    'Transfer-Encoding': 'chunked'
+  });
+
+  res.write('<!doctype html>');
+
+  render(
     <StaticRouter location={req.url} context={{}}>
       <IndexHtml>
         <Layout />
       </IndexHtml>
     </StaticRouter>
-  );
-
-  return res.send('<!doctype html>' + markup);
+  ).toStream().pipe(res);
 };
 
 module.exports = renderServerSideApp;

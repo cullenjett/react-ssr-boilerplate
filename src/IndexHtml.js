@@ -32,7 +32,6 @@ const IndexHtml = ({ children }) => (
     </head>
     <body>
       <div id="root">{children}</div>
-      {/* <script type="text/javascript" src={getBundleJs()}></script> */}
       {jsScripts()}
     </body>
   </html>
