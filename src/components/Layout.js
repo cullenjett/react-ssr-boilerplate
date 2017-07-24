@@ -1,20 +1,24 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, NavLink } from 'react-router-dom';
 
 import { Home, About } from '../routes';
 
 const Layout = () => (
-  <div>
+  <div className="layout">
     <nav>
-      <Link to="/">Home</Link>
+      <NavLink exact to="/" activeClassName="active">Home</NavLink>
       <span>&nbsp;</span>
-      <Link to="/about">About</Link>
+      <NavLink exact to="/about" activeClassName="active">About</NavLink>
     </nav>
 
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
-    </Switch>
+    <div className="main">
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/about" component={About} />
+      </Switch>
+    </div>
+
+    <footer></footer>
   </div>
 );
 

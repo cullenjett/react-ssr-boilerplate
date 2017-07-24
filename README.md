@@ -18,7 +18,7 @@ Features:
 
 ## Current Quirks
 
-- There are two files for the eventual `index.html`: `src/index.html` & `src/IndexHtml.js`. `src/index.html` is only used during development and `src/IndexHtml.js` is used in production. Any changes to `src/index.html` should be mirrored in `src/IndexHtml.js`.
+- There are two files for the eventual `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development and `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`.
 - No real testing setup yet (Jest is installed and will work out of the box, but there isn't an established convention).
 - No Redux or other state management library.
 
