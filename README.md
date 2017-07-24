@@ -1,3 +1,28 @@
+# React Server Side Rendering Boilerplate
+
+Simple starting point for React applications. Started life as an ejected `create-react-app` (v1.3.3) app.
+
+Features:
+- Server Side Rendering via Express & Rapscallion
+- Async code splitting on routes
+- Separate chunk file for dependencies in `node_modules`
+- Sass styles
+- Node.js clusters for improved performance under load
+- ServiceWorker for production deploys (commented out in `src/index.js`)
+
+## Do it!
+- `npm install`
+- Development: `npm start`
+- Production: `npm run start:prod`
+
+## Current Quirks
+
+- There are two files for the eventual `index.html`: `src/index.html` & `src/IndexHtml.js`. `src/index.html` is only used during development (`npm start`) and `src/IndexHtml.js` is used in production (`npm run start:prod`) Any changes to `src/index.html` should be mirrored in `src/IndexHtml.js`.
+- No real testing setup yet (Jest is installed and will work out of the box, but there isn't any convention setup yet).
+- No Redux or other state management library.
+
+## Create React App README:
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -1760,7 +1785,7 @@ If you’re using [Apache HTTP Server](https://httpd.apache.org/), you need to c
     RewriteRule ^ index.html [QSA,L]
 ```
 
-It will get copied to the `build` folder when you run `npm run build`. 
+It will get copied to the `build` folder when you run `npm run build`.
 
 If you’re using [Apache Tomcat](http://tomcat.apache.org/), you need to follow [this Stack Overflow answer](https://stackoverflow.com/a/41249464/4878474).
 

@@ -1,6 +1,6 @@
 {
-  "name": "ssr-split-demo",
-  "version": "0.1.0",
+  "name": "react-ssr-boilerplate",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.1",
