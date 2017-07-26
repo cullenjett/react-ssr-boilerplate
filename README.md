@@ -19,8 +19,8 @@ Features:
 
 ## Current Quirks
 
-- There are two files for the eventual `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development and `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`. Eventually this will be fixed.
-- Routing configuration is also sort of duplicated -- all routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering on the server need some extra configuration inside `sever/fetchDataForRender`.
+- There are two files that act as the `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development while `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`. The real implication of this is that during local development you don't get server side rendering. Eventually this will be fixed so there's only one file representing index.html and local development will use SSR.
+- Routing configuration is also sort of duplicated -- all routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender`.
 - No real testing setup yet (Jest is installed and will work out of the box, but there isn't an established convention).
 
 ## Create React App README:
