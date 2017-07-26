@@ -7,7 +7,7 @@ require('babel-core/register')({
 
 const cluster = require('cluster');
 
-const app = require('./app');
+const app = require('./app').default;
 const port = process.env.PORT || 3000;
 
 // Use the native Node.js cluster module to create a worker processes for each CPU

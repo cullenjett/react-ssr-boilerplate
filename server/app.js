@@ -1,16 +1,9 @@
-require('babel-core/register')({
-  plugins: [
-    'syntax-dynamic-import',
-    'dynamic-import-node'
-  ]
-});
+import path from 'path';
+import express from 'express';
+import compression from 'compression';
+import helmet from 'helmet';
 
-const path = require('path');
-const express = require('express');
-const compression = require('compression');
-const helmet = require('helmet');
-
-const renderServerSideApp = require('./renderServerSideApp');
+import renderServerSideApp from './renderServerSideApp';
 
 const app = express();
 
@@ -21,4 +14,4 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('*', renderServerSideApp);
 
-module.exports = app;
+export default app;
