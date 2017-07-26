@@ -6,22 +6,9 @@ require('babel-core/register')({
 });
 
 const cluster = require('cluster');
-const path = require('path');
-const express = require('express');
-const compression = require('compression');
-const helmet = require('helmet');
 
-const renderServerSideApp = require('./renderServerSideApp');
-
-const app = express();
+const app = require('./app');
 const port = process.env.PORT || 3000;
-
-app.use(compression());
-app.use(helmet());
-
-app.use(express.static(path.join(__dirname, '../build')));
-
-app.get('*', renderServerSideApp);
 
 // Use the native Node.js cluster module to create a worker processes for each CPU
 // -------------------------------------------------------------------------------
