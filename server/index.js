@@ -23,7 +23,6 @@ app.use(express.static(path.join(__dirname, '../build')));
 
 app.get('*', renderServerSideApp);
 
-
 // Use the native Node.js cluster module to create a worker processes for each CPU
 // -------------------------------------------------------------------------------
 if (cluster.isMaster) {

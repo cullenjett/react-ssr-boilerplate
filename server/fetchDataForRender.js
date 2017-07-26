@@ -1,8 +1,6 @@
 import url from 'url';
 import { matchPath } from 'react-router-dom';
 
-// import routeConfig from '../src/routes/routeConfig';
-
 import { Home } from '../src/components/Home';
 
 const routesThatFetchData = [
