@@ -19,7 +19,7 @@ const cssLinks = () => {
   ));
 };
 
-const IndexHtml = ({ children }) => (
+const IndexHtml = ({ initialState, children }) => (
   <html lang="en">
     <head>
       <meta charset="utf-8" />
@@ -28,7 +28,8 @@ const IndexHtml = ({ children }) => (
       <link rel="manifest" href="/manifest.json" />
       <link rel="shortcut icon" href="/favicon.ico" />
       {cssLinks()}
-      <title>React App</title>
+      <title>React SSR Boilerplate</title>
+      <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}` }}></script>
     </head>
     <body>
       <div id="root">{children}</div>

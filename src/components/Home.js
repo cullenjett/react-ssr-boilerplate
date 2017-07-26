@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-class Home extends Component {
+export class Home extends Component {
+  static fetchData(store, match) {
+    // Here we're mimicing an async actionCreator
+    return new Promise(resolve => {
+      setTimeout(() => {
+        store.dispatch({
+          type: 'CREATE_SESSION',
+          session: {
+            user: { id: 1, name: 'Cullen Jett' }
+          }
+        });
+
+        resolve();
+      }, 500);
+    });
+  }
+
   render() {
     return (
       <div>
@@ -10,4 +28,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(connect()(Home));

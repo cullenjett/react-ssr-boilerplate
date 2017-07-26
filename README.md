@@ -4,6 +4,7 @@ Simple starting point for React applications. Started life as an ejected `create
 
 Features:
 - Server Side Rendering via Express & Rapscallion
+- Redux (with server side data fetching)
 - React Router v4
 - Async code splitting on routes
 - Separate chunk file for dependencies in `node_modules`
@@ -18,9 +19,9 @@ Features:
 
 ## Current Quirks
 
-- There are two files for the eventual `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development and `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`.
+- There are two files for the eventual `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development and `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`. Eventually this will be fixed.
+- Routing configuration is also sort of duplicated -- `routes/routeConfig` is purely used for server side route matching and data fetching while other routes are ad hoc in `App.js` (i.e. no config).
 - No real testing setup yet (Jest is installed and will work out of the box, but there isn't an established convention).
-- No Redux or other state management library.
 
 ## Create React App README:
 
