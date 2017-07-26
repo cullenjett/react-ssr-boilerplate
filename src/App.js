@@ -1,10 +1,14 @@
 import React from 'react';
-import { Switch, Route, NavLink } from 'react-router-dom';
+import {
+  Switch,
+  Route,
+  NavLink
+} from 'react-router-dom';
 
-import asAsyncRoute from './routes/asAsyncComponent';
+import asAsyncComponent from './utils/asAsyncComponent';
 
-const AsyncHome = asAsyncRoute(() => import(/* webpackChunkName: 'home' */ './components/Home'));
-const AsyncAbout = asAsyncRoute(() => import(/* webpackChunkName: 'about' */ './components/About'));
+const AsyncHome = asAsyncComponent(() => import(/* webpackChunkName: 'home' */ './components/Home'));
+const AsyncAbout = asAsyncComponent(() => import(/* webpackChunkName: 'about' */ './components/About'));
 
 const App = () => (
   <div className="app">

@@ -1,13 +1,23 @@
 import url from 'url';
 import { matchPath } from 'react-router-dom';
 
-import routeConfig from '../src/routes/routeConfig';
+// import routeConfig from '../src/routes/routeConfig';
+
+import { Home } from '../src/components/Home';
+
+const routesThatFetchData = [
+  {
+    path: '/',
+    component: Home,
+    exact: true
+  }
+];
 
 const fetchDataForRender = (req, store) => {
   const promises = [];
 
   // use `Array.some` to imitate `<Switch>` behavior of selecting only the first to match
-  routeConfig.some(route => {
+  routesThatFetchData.some(route => {
     const match = matchPath(url.parse(req.url).pathname, route);
     if (match) {
       const promise = (route.component &&

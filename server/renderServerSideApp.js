@@ -5,7 +5,7 @@ import { StaticRouter } from 'react-router-dom';
 
 import IndexHtml from '../src/IndexHtml';
 import App from '../src/App';
-import configureStore from '../src/configureStore';
+import configureStore from '../src/utils/configureStore';
 import fetchDataForRender from './fetchDataForRender';
 
 const renderServerSideApp = (req, res) => {
