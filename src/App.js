@@ -3,8 +3,8 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 
 import asAsyncRoute from './routes/asAsyncComponent';
 
-const Home = asAsyncRoute(() => import(/* webpackChunkName: 'home' */ './components/Home'));
-const About = asAsyncRoute(() => import(/* webpackChunkName: 'about' */ './components/About'));
+const AsyncHome = asAsyncRoute(() => import(/* webpackChunkName: 'home' */ './components/Home'));
+const AsyncAbout = asAsyncRoute(() => import(/* webpackChunkName: 'about' */ './components/About'));
 
 const App = () => (
   <div className="app">
@@ -16,8 +16,8 @@ const App = () => (
 
     <div className="main">
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
+        <Route exact path="/" component={AsyncHome} />
+        <Route path="/about" component={AsyncAbout} />
       </Switch>
     </div>
 
