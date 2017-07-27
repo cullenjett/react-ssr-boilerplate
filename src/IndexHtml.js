@@ -1,19 +1,20 @@
 import React from 'react';
 
-// import assetManifest from '../build/asset-manifest.json';
+let assetManifest;
+if (process.env.NODE_ENV === 'production') {
+  assetManifest = require('../build/asset-manifest.json');
+} else {
+  assetManifest = {
+    'node-modules.js': 'node-modules.bundle.js',
+    'main.js': 'main.bundle.js'
+  };
+}
 
 const jsScripts = () => {
-  let paths;
-
-  if (process.env.NODE_ENV === 'production') {
-    const assetManifest = require('../build/asset-manifest.json');
-    paths = [
-      assetManifest['node-modules.js'],
-      assetManifest['main.js']
-    ];
-  } else {
-    paths = ['node-modules.bundle.js', 'main.bundle.js'];
-  }
+  const paths = [
+    assetManifest['node-modules.js'],
+    assetManifest['main.js']
+  ];
 
   return paths.map(path => (
     <script type="text/javascript" src={path}></script>
@@ -21,16 +22,9 @@ const jsScripts = () => {
 };
 
 const cssLinks = () => {
-  let paths;
-
-  if (process.env.NODE_ENV === 'production') {
-    const assetManifest = require('../build/asset-manifest.json');
-    paths = [
-      assetManifest['main.css']
-    ];
-  } else {
-    paths = [];
-  }
+  const paths = [
+    assetManifest['main.css']
+  ];
 
   return paths.map(path => (
     <link rel="stylesheet" href={path} />
