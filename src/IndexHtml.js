@@ -1,20 +1,38 @@
 import React from 'react';
 
-import assetManifest from '../build/asset-manifest.json';
+// import assetManifest from '../build/asset-manifest.json';
 
 const jsScripts = () => {
-  return [
-    assetManifest['node-modules.js'],
-    assetManifest['main.js']
-  ].map(path => (
+  let paths;
+
+  if (process.env.NODE_ENV === 'production') {
+    const assetManifest = require('../build/asset-manifest.json');
+    paths = [
+      assetManifest['node-modules.js'],
+      assetManifest['main.js']
+    ];
+  } else {
+    paths = ['node-modules.bundle.js', 'main.bundle.js'];
+  }
+
+  return paths.map(path => (
     <script type="text/javascript" src={path}></script>
   ));
 };
 
 const cssLinks = () => {
-  return [
-    assetManifest['main.css']
-  ].map(path => (
+  let paths;
+
+  if (process.env.NODE_ENV === 'production') {
+    const assetManifest = require('../build/asset-manifest.json');
+    paths = [
+      assetManifest['main.css']
+    ];
+  } else {
+    paths = [];
+  }
+
+  return paths.map(path => (
     <link rel="stylesheet" href={path} />
   ));
 };

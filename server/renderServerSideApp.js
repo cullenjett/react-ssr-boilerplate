@@ -27,7 +27,7 @@ const renderServerSideApp = (req, res) => {
           </IndexHtml>
         </StaticRouter>
       </Provider>
-    ).toStream().pipe(res);
+    ).includeDataReactAttrs(false).toStream().pipe(res);
   });
 };
 
