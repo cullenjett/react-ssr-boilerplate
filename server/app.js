@@ -26,7 +26,9 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 
   app.use(webpackHotMiddleware(compiler, {
-    path: '/__webpack_hmr'
+    path: '/__webpack_hmr',
+    // Node 8.1.0 has a 5 sec keepAlive timeout, so HMR breaks without this
+    heartbeat: 4000
   }));
 }
 
