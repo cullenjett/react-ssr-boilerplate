@@ -21,8 +21,13 @@ if (process.env.NODE_ENV !== 'production') {
 
   app.use(webpackDevMiddleware(compiler, {
     hot: true,
-    noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
+    progress: true,
+    stats: {
+      colors: true,
+      assets: true,
+      chunks: false
+    }
   }));
 
   app.use(webpackHotMiddleware(compiler, {
