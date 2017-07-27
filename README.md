@@ -3,24 +3,23 @@
 Simple starting point for React applications. Started life as an ejected `create-react-app` (v1.3.3) app.
 
 Features:
-- Server Side Rendering via Express & Rapscallion
+- Server Side Rendering via Express & Rapscallion (even in dev mode)
 - Redux (with server side data fetching)
 - React Router v4
-- Async code splitting on routes
-- Separate chunk file for dependencies in `node_modules`
+- Async code splitting on routes and for dependencies in `node_modules`
 - Sass styles
-- Node.js clusters for improved performance under load
+- Node.js clusters for improved performance under load (production only)
 - ServiceWorker for production deploys (commented out in `src/index.js`)
 
 ## Do it!
+
 - `npm install`
 - Development: `npm start`
-- Production: `npm run start:prod`
+- Production: `npm run start-prod`
 
 ## Current Quirks
 
-- There are two files that act as the `index.html`: `public/index.html` & `src/IndexHtml.js`. `public/index.html` is only used during development while `src/IndexHtml.js` is used in production. Any changes to `public/index.html` should be mirrored in `src/IndexHtml.js`. The real implication of this is that during local development you don't get server side rendering. Eventually this will be fixed so there's only one file representing index.html and local development will use SSR.
-- Routing configuration is also sort of duplicated -- all routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender`.
+- Routing configuration is _sort of_ duplicated -- all routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender`.
 - No real testing setup yet (Jest is installed and will work out of the box, but there isn't an established convention).
 
 ## Create React App README:
