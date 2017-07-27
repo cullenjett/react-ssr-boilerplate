@@ -10,21 +10,7 @@ const app = require('./app').default;
 
 const port = process.env.PORT || 3000;
 
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(port, (err) => {
-    if (err) {
-      console.error(err);
-    }
-
-    console.log('-----------------------------------------------------------');
-    console.log(`⚡️ ⚡️ ⚡️  Dev server running on http://localhost:${port}/  ⚡️ ⚡️ ⚡️`);
-    console.log('-----------------------------------------------------------');
-  });
-
-  return;
-}
-
-// Prod mode: use the native Node.js cluster module to create a worker processes for each CPU
+// Use the native Node.js cluster module to create a worker processes for each CPU
 if (cluster.isMaster) {
   console.log(`Master pid: ${process.pid}`);
 
