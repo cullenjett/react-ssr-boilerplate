@@ -31,4 +31,4 @@ const renderServerSideApp = (req, res) => {
   });
 };
 
-module.exports = renderServerSideApp;
+export default renderServerSideApp;

@@ -6,8 +6,8 @@ require('babel-core/register')({
 });
 
 const cluster = require('cluster');
-
 const app = require('./app').default;
+
 const port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'production') {
