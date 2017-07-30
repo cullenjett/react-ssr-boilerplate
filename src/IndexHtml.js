@@ -10,6 +10,17 @@ if (process.env.NODE_ENV === 'production') {
   };
 }
 
+const preloadScripts = () => {
+  const paths = [
+    assetManifest['node-modules.js'],
+    assetManifest['main.js']
+  ];
+
+  return paths.map(path => (
+    <link rel="preload" as="script" href={path} />
+  ));
+};
+
 const jsScripts = () => {
   const paths = [
     assetManifest['node-modules.js'],
@@ -40,6 +51,7 @@ const IndexHtml = ({ initialState, children }) => (
       <link rel="manifest" href="/manifest.json" />
       <link rel="shortcut icon" href="/favicon.ico" />
       {cssLinks()}
+      {preloadScripts()}
       <title>React SSR Boilerplate</title>
       <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}` }}></script>
     </head>
