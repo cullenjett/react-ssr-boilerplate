@@ -42,6 +42,17 @@ const cssLinks = () => {
   ));
 };
 
+const envVars = () => {
+  const windowEnvVars = `
+    window.process = {
+      env: {
+        NODE_ENV: '${process.env.NODE_ENV}'
+      }
+    };
+  `;
+  return <script dangerouslySetInnerHTML={{ __html: windowEnvVars }}></script>
+};
+
 const IndexHtml = ({ initialState, children }) => (
   <html lang="en">
     <head>
@@ -52,6 +63,7 @@ const IndexHtml = ({ initialState, children }) => (
       <link rel="shortcut icon" href="/favicon.ico" />
       {cssLinks()}
       {preloadScripts()}
+      {envVars()}
       <title>React SSR Boilerplate</title>
       <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}` }}></script>
     </head>
