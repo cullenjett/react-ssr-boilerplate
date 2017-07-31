@@ -16,8 +16,8 @@ const preloadScripts = () => {
     assetManifest['main.js']
   ];
 
-  return paths.map(path => (
-    <link rel="preload" as="script" href={path} />
+  return paths.map((path, i) => (
+    <link rel="preload" as="script" href={path} key={i} />
   ));
 };
 
@@ -27,8 +27,8 @@ const jsScripts = () => {
     assetManifest['main.js']
   ];
 
-  return paths.map(path => (
-    <script type="text/javascript" src={path}></script>
+  return paths.map((path, i) => (
+    <script type="text/javascript" src={path} key={i}></script>
   ));
 };
 
@@ -37,8 +37,8 @@ const cssLinks = () => {
     assetManifest['main.css']
   ];
 
-  return paths.map(path => (
-    <link rel="stylesheet" href={path} />
+  return paths.map((path, i) => (
+    <link rel="stylesheet" href={path} key={i}/>
   ));
 };
 
