@@ -17,7 +17,7 @@ const preloadScripts = () => {
   ];
 
   return paths.map((path, i) => (
-    <link rel="preload" as="script" href={path} key={i} />
+    <link rel="preload" as="script" href={'/' + path} key={i} />
   ));
 };
 
@@ -28,7 +28,7 @@ const jsScripts = () => {
   ];
 
   return paths.map((path, i) => (
-    <script type="text/javascript" src={path} key={i}></script>
+    <script type="text/javascript" src={'/' + path} key={i}></script>
   ));
 };
 
@@ -38,7 +38,7 @@ const cssLinks = () => {
   ];
 
   return paths.map((path, i) => (
-    <link rel="stylesheet" href={path} key={i}/>
+    <link rel="stylesheet" href={'/' + path} key={i}/>
   ));
 };
 
