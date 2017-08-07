@@ -50,13 +50,13 @@ const envVars = () => {
       }
     };
   `;
-  return <script dangerouslySetInnerHTML={{ __html: windowEnvVars }}></script>
+  return <script dangerouslySetInnerHTML={{ __html: windowEnvVars }}></script>;
 };
 
 const IndexHtml = ({ initialState, children }) => (
   <html lang="en">
     <head>
-      <meta charset="utf-8" />
+      <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
       <meta name="theme-color" content="#000000" />
       <link rel="manifest" href="/manifest.json" />

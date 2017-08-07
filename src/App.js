@@ -25,7 +25,7 @@ const App = () => (
       </Switch>
     </div>
 
-    <footer></footer>
+    <footer />
   </div>
 );
 

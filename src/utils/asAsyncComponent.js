@@ -9,20 +9,20 @@ const asAsyncComponent = (getComponent) => {
     componentWillMount() {
       if (!this.state.Component) {
         getComponent().then(mod => mod.default).then(Component => {
-          AsyncComponent.Component = Component
-          this.setState({ Component })
-        })
+          AsyncComponent.Component = Component;
+          this.setState({ Component });
+        });
       }
     }
 
     render() {
-      const { Component } = this.state
+      const { Component } = this.state;
       if (Component) {
-        return <Component {...this.props} />
+        return <Component {...this.props} />;
       }
-      return null
+      return null;
     }
-  }
+  };
 };
 
 export default asAsyncComponent;
