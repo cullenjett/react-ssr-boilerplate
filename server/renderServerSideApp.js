@@ -1,33 +1,40 @@
 import React from 'react';
-import { render } from 'rapscallion';
+import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
-import IndexHtml from '../src/IndexHtml';
+import indexHtml from './indexHtml';
 import App from '../src/App';
 import configureStore from '../src/utils/configureStore';
 import fetchDataForRender from './fetchDataForRender';
 
 const renderServerSideApp = (req, res) => {
-  const store = configureStore();
-
-  res.writeHead(200, {
-    'Content-Type': 'text/html',
-    'Transfer-Encoding': 'chunked'
-  });
-
-  res.write('<!doctype html>');
+  const store = configureStore(undefined, { logger: false });
 
   fetchDataForRender(req, store).then(() => {
-    render(
+    const context = {};
+
+    const markup = ReactDOMServer.renderToString(
       <Provider store={store}>
-        <StaticRouter location={req.url} context={{}}>
-          <IndexHtml initialState={store.getState()}>
-            <App />
-          </IndexHtml>
+        <StaticRouter location={req.url} context={context}>
+          <App />
         </StaticRouter>
       </Provider>
-    ).includeDataReactAttrs(false).toStream().pipe(res);
+    );
+
+    if (context.url) {
+      res.redirect(context.url);
+    } else {
+      const helmet = Helmet.renderStatic();
+      const fullMarkup = indexHtml({
+        initialState: store.getState(),
+        helmet,
+        markup
+      });
+
+      res.status(200).send(fullMarkup);
+    }
   });
 };
 

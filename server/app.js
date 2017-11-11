@@ -1,17 +1,18 @@
 import path from 'path';
 import express from 'express';
-import compression from 'compression';
+import shrinkRay from 'shrink-ray';
 import helmet from 'helmet';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import morgan from 'morgan';
 
 import config from '../config/webpack.config.dev';
 import renderServerSideApp from './renderServerSideApp';
 
 const app = express();
 
-app.use(compression());
+app.use(shrinkRay());
 app.use(helmet());
 
 app.use(express.static(path.join(__dirname, '../build')));
@@ -26,15 +27,19 @@ if (process.env.NODE_ENV !== 'production') {
     stats: {
       colors: true,
       assets: true,
+      modules: false,
       chunks: false
     }
   }));
 
   app.use(webpackHotMiddleware(compiler, {
     path: '/__webpack_hmr',
-    // Node 8.1.0 has a 5 sec keepAlive timeout, so HMR breaks without this
     heartbeat: 4000
   }));
+}
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
 }
 
 app.get('*', renderServerSideApp);

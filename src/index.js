@@ -9,7 +9,7 @@ import configureStore from './utils/configureStore';
 
 const store = configureStore(window.__INITIAL_STATE__);
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
       <App />

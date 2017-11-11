@@ -14,7 +14,6 @@ const routesThatFetchData = [
 const fetchDataForRender = (req, store) => {
   const promises = [];
 
-  // use `Array.some` to imitate `<Switch>` behavior of selecting only the first to match
   routesThatFetchData.some(route => {
     const match = matchPath(url.parse(req.url).pathname, route);
     if (match) {

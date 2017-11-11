@@ -1,12 +1,15 @@
 # React Server Side Rendering Boilerplate
 
-Simple starting point for React applications. Started life as an ejected `create-react-app` (v1.3.3) app.
+Starting point for server rendered React applications. Started life as an ejected `create-react-app` app.
 
 Features:
-- Server Side Rendering via Express & Rapscallion (even in dev mode)
+- Server side rendering
 - Redux (with server side data fetching)
 - React Router v4
-- Async code splitting on routes and for dependencies in `node_modules`
+- Async code splitting on routes (opt-in) and for dependencies in `node_modules`
+- React Helmet for dynamic manipulation of the document `<head />`
+- Webpack dev server
+- `Jest` and `Enzyme` config ready to test the crap out of some stuff
 - Sass styles
 - Node.js clusters for improved performance under load (production only)
 - ServiceWorker for production deploys (commented out in `src/index.js`)
@@ -20,7 +23,9 @@ Features:
 ## Current Quirks
 
 - Routing configuration is _sort of_ duplicated -- all routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender`.
-- No real testing setup yet (Jest is installed and will work out of the box, but there isn't an established convention).
+- Anything that's code split won't render server side. Doing SSR + code splitting means having to solve the async nature of webpack's `import()` on the server, and it turns out that's pretty hard. What this means is that you can server-render an application shell and once the client loads that shell gets populated, which is kinda neat. [This package](https://github.com/faceyspacey/react-universal-component) has some promise, but I'm too lazy to try and implement it so you're on your own.  
+
+-----------------------------------------------------
 
 ## Create React App README:
 
