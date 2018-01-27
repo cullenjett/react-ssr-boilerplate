@@ -20,22 +20,26 @@ app.use(express.static(path.join(__dirname, '../build')));
 if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(config);
 
-  app.use(webpackDevMiddleware(compiler, {
-    hot: true,
-    publicPath: config.output.publicPath,
-    progress: true,
-    stats: {
-      colors: true,
-      assets: true,
-      modules: false,
-      chunks: false
-    }
-  }));
+  app.use(
+    webpackDevMiddleware(compiler, {
+      hot: true,
+      publicPath: config.output.publicPath,
+      progress: true,
+      stats: {
+        colors: true,
+        assets: true,
+        modules: false,
+        chunks: false
+      }
+    })
+  );
 
-  app.use(webpackHotMiddleware(compiler, {
-    path: '/__webpack_hmr',
-    heartbeat: 4000
-  }));
+  app.use(
+    webpackHotMiddleware(compiler, {
+      path: '/__webpack_hmr',
+      heartbeat: 4000
+    })
+  );
 }
 
 if (process.env.NODE_ENV === 'production') {

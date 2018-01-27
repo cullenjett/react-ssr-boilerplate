@@ -10,10 +10,7 @@ if (isProduction) {
 }
 
 const preloadScripts = () => {
-  const paths = [
-    assetManifest['node-modules.js'],
-    assetManifest['main.js']
-  ];
+  const paths = [assetManifest['node-modules.js'], assetManifest['main.js']];
 
   return paths.reduce((string, path) => {
     string += `<link rel="preload" as="script" href=${PUBLIC_URL}/${path} />`;
@@ -22,9 +19,7 @@ const preloadScripts = () => {
 };
 
 const cssLinks = () => {
-  const paths = [
-    assetManifest['main.css']
-  ];
+  const paths = [assetManifest['main.css']];
 
   if (isProduction) {
     return paths.reduce((string, path) => {
@@ -36,10 +31,11 @@ const cssLinks = () => {
   }
 };
 
-const jsScripts = () => {
+const jsScripts = bundles => {
   const paths = [
     assetManifest['node-modules.js'],
-    assetManifest['main.js']
+    assetManifest['main.js'],
+    ...bundles.filter(b => b.file.endsWith('.js')).map(b => b.file)
   ];
 
   return paths.reduce((string, path) => {
@@ -48,7 +44,7 @@ const jsScripts = () => {
   }, '');
 };
 
-const indexHtml = ({ initialState, helmet, markup }) => {
+const indexHtml = ({ initialState, helmet, bundles, markup }) => {
   const htmlAttrs = helmet.htmlAttributes.toString();
   const bodyAttrs = helmet.bodyAttributes.toString();
 
@@ -72,7 +68,9 @@ const indexHtml = ({ initialState, helmet, markup }) => {
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
 
-        ${jsScripts()}
+        ${jsScripts(bundles)}
+
+        <script>window.main();</script>
       </body>
     </html>
   `;

@@ -1,11 +1,10 @@
 require('babel-core/register')({
-  plugins: [
-    'syntax-dynamic-import',
-    'dynamic-import-node'
-  ]
+  plugins: ['syntax-dynamic-import', 'dynamic-import-node']
 });
 
 const cluster = require('cluster');
+const Loadable = require('react-loadable');
+
 const app = require('./app').default;
 
 const port = process.env.PORT || 3000;
@@ -16,7 +15,7 @@ if (cluster.isMaster) {
 
   const cpuCount = require('os').cpus().length;
   for (let i = 0; i < cpuCount; i += 1) {
-      cluster.fork();
+    cluster.fork();
   }
 
   cluster.on('exit', worker => {
@@ -24,11 +23,17 @@ if (cluster.isMaster) {
     cluster.fork();
   });
 } else {
-  app.listen(port, err => {
-    if (err) {
-      return console.error(err);
-    }
+  Loadable.preloadAll().then(() => {
+    app.listen(port, err => {
+      if (err) {
+        return console.error(err);
+      }
 
-    console.info(`Server running on port ${port} -- Worker pid: ${cluster.worker.process.pid}`);
+      console.info(
+        `Server running on port ${port} -- Worker pid: ${
+          cluster.worker.process.pid
+        }`
+      );
+    });
   });
 }

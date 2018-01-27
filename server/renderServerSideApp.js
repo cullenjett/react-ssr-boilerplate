@@ -3,6 +3,9 @@ import ReactDOMServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import Loadable from 'react-loadable';
+import { getBundles } from 'react-loadable/webpack';
+// import stats from '../build/react-loadable.json';
 
 import indexHtml from './indexHtml';
 import App from '../src/App';
@@ -14,14 +17,23 @@ const renderServerSideApp = (req, res) => {
 
   fetchDataForRender(req, store).then(() => {
     const context = {};
+    const modules = [];
 
     const markup = ReactDOMServer.renderToString(
-      <Provider store={store}>
-        <StaticRouter location={req.url} context={context}>
-          <App />
-        </StaticRouter>
-      </Provider>
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <Provider store={store}>
+          <StaticRouter location={req.url} context={context}>
+            <App />
+          </StaticRouter>
+        </Provider>
+      </Loadable.Capture>
     );
+
+    let bundles = [];
+    if (process.env.NODE_ENV === 'production') {
+      const stats = require('../build/react-loadable.json');
+      bundles = getBundles(stats, modules);
+    }
 
     if (context.url) {
       res.redirect(context.url);
@@ -29,10 +41,12 @@ const renderServerSideApp = (req, res) => {
       const helmet = Helmet.renderStatic();
       const fullMarkup = indexHtml({
         initialState: store.getState(),
+        bundles,
         helmet,
         markup
       });
 
+      console.log(fullMarkup);
       res.status(200).send(fullMarkup);
     }
   });
