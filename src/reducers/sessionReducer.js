@@ -33,6 +33,6 @@ export default session;
 
 // SELECTORS
 // ================================================
-export const selectCurrentUser = (state) => {
+export const selectCurrentUser = state => {
   return state.user;
 };

@@ -1,3 +1,4 @@
+import os from 'os';
 import path from 'path';
 import express from 'express';
 import shrinkRay from 'shrink-ray';
@@ -12,15 +13,60 @@ import renderServerSideApp from './renderServerSideApp';
 
 const app = express();
 
+if (process.env.PUBLIC_URL === undefined) {
+  throw new Error(
+    'process.env.PUBLIC_URL must be defined. Did you copy .env_SAMPLE to .env?'
+  );
+}
+
 app.use(shrinkRay());
 app.use(helmet());
 
-app.use(express.static(path.join(__dirname, '../build')));
+function toMb(bytes) {
+  return Math.floor(bytes / 1024 / 1024);
+}
+
+app.get('/system', (req, res) => {
+  const processMem = process.memoryUsage();
+  const stats = {
+    memory: {
+      system: {
+        free: toMb(os.freemem()),
+        total: toMb(os.totalmem())
+      },
+      process: {
+        rss: toMb(processMem.rss),
+        heapTotal: toMb(processMem.heapTotal),
+        heapUsed: toMb(processMem.heapUsed)
+      }
+    },
+    loadavg: os.loadavg(),
+    cpuCount: os.cpus().length,
+    uptime: {
+      system: Math.floor(os.uptime()),
+      process: Math.floor(process.uptime())
+    }
+  };
+
+  res.json(stats);
+});
+
+app.use(
+  process.env.PUBLIC_URL,
+  express.static(path.join(__dirname, '../build'), {
+    maxage: '30 days'
+  })
+);
+
+app.use(
+  process.env.PUBLIC_URL,
+  express.static(path.join(__dirname, '../public'), {
+    maxage: '30 days'
+  })
+);
 
 if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(config);
-
-  app.use(express.static(path.join(__dirname, '../public')));
 
   app.use(
     webpackDevMiddleware(compiler, {
@@ -30,8 +76,9 @@ if (process.env.NODE_ENV !== 'production') {
       stats: {
         colors: true,
         assets: true,
+        chunks: false,
         modules: false,
-        chunks: false
+        hash: false
       }
     })
   );

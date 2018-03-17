@@ -4,13 +4,14 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
-import './index.scss';
 import App from './App';
 import configureStore from './utils/configureStore';
 
+import './index.scss';
+
 const store = configureStore(window.__INITIAL_STATE__);
 
-window.main = () => {
+window.render = () => {
   Loadable.preloadReady().then(() => {
     ReactDOM.hydrate(
       <Provider store={store}>
@@ -22,6 +23,3 @@ window.main = () => {
     );
   });
 };
-
-// import registerServiceWorker from './utils/registerServiceWorker';
-// registerServiceWorker();
