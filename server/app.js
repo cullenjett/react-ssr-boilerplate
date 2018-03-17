@@ -20,6 +20,8 @@ app.use(express.static(path.join(__dirname, '../build')));
 if (process.env.NODE_ENV !== 'production') {
   const compiler = webpack(config);
 
+  app.use(express.static(path.join(__dirname, '../public')));
+
   app.use(
     webpackDevMiddleware(compiler, {
       hot: true,

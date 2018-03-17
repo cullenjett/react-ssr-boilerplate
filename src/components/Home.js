@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 export class Home extends Component {
   static fetchData(store, match) {
-    // Here we're mimicing an async actionCreator
+    // Here we're mimicing an async action creator
     return new Promise(resolve => {
       setTimeout(() => {
         store.dispatch({

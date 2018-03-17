@@ -5,7 +5,6 @@ import { StaticRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
-// import stats from '../build/react-loadable.json';
 
 import indexHtml from './indexHtml';
 import App from '../src/App';
