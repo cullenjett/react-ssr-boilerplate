@@ -1,6 +1,9 @@
 import React from 'react';
 import { Switch, Route, NavLink } from 'react-router-dom';
 import Loadable from 'react-loadable';
+import Helmet from 'react-helmet';
+
+import * as metadata from './metadata';
 
 const LoadableHome = Loadable({
   loader: () => import(/* webpackChunkName: 'home' */ './components/Home'),
@@ -18,6 +21,14 @@ const LoadableAbout = Loadable({
 
 const App = () => (
   <div className="app">
+    <Helmet
+      title={metadata.title}
+      meta={metadata.meta}
+      link={metadata.link}
+      script={metadata.script}
+      noscript={metadata.noscript}
+    />
+
     <nav>
       <NavLink exact to="/" activeClassName="active">
         Home
