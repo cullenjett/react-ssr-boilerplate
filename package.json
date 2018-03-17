@@ -1,6 +1,6 @@
 {
   "name": "react-ssr-boilerplate",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "scripts": {
     "start": "nodemon --watch server scripts/start.js",
     "build": "node scripts/build.js",
