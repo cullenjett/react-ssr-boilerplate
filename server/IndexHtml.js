@@ -1,12 +1,16 @@
-const PUBLIC_URL = process.env.PUBLIC_URL || '';
-const isProduction = process.env.NODE_ENV === 'production';
-let assetManifest = {
-  'node-modules.js': 'node-modules.bundle.js',
-  'main.js': 'main.bundle.js'
-};
+import getClientEnvironment from '../config/env';
 
-if (isProduction) {
+const env = getClientEnvironment();
+const PUBLIC_URL = env.raw.PUBLIC_URL;
+let assetManifest;
+
+if (env.raw.NODE_ENV === 'production') {
   assetManifest = require('../build/asset-manifest.json');
+} else {
+  assetManifest = {
+    'node-modules.js': 'node-modules.bundle.js',
+    'main.js': 'main.bundle.js'
+  };
 }
 
 const preloadScripts = () => {
@@ -21,7 +25,7 @@ const preloadScripts = () => {
 const cssLinks = () => {
   const paths = [assetManifest['main.css']];
 
-  if (isProduction) {
+  if (env.raw.NODE_ENV === 'production') {
     return paths.reduce((string, path) => {
       string += `<link rel="stylesheet" href=${PUBLIC_URL}/${path} />`;
       return string;
@@ -44,7 +48,7 @@ const jsScripts = bundles => {
   }, '');
 };
 
-const indexHtml = ({ initialState, helmet, bundles, markup }) => {
+const indexHtml = ({ helmet, initialState, markup, bundles }) => {
   const htmlAttrs = helmet.htmlAttributes.toString();
   const bodyAttrs = helmet.bodyAttributes.toString();
 
@@ -65,12 +69,13 @@ const indexHtml = ({ initialState, helmet, bundles, markup }) => {
         <div id="root">${markup}</div>
 
         <script>
+          window.process = ${env.forIndexHtml};
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
         </script>
 
         ${jsScripts(bundles)}
 
-        <script>window.main();</script>
+        <script>window.render();</script>
       </body>
     </html>
   `;

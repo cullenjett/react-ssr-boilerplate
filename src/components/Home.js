@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 export class Home extends Component {
-  static fetchData(store, match) {
+  static fetchData(store) {
     // Here we're mimicing an async action creator
     return new Promise(resolve => {
       setTimeout(() => {
@@ -15,7 +15,7 @@ export class Home extends Component {
         });
 
         resolve();
-      }, 500);
+      }, 1000);
     });
   }
 

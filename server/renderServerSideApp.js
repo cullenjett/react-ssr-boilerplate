@@ -12,6 +12,7 @@ import configureStore from '../src/utils/configureStore';
 import fetchDataForRender from './fetchDataForRender';
 
 const renderServerSideApp = (req, res) => {
+  console.log('renderServerSideApp start');
   const store = configureStore(undefined, { logger: false });
 
   fetchDataForRender(req, store).then(() => {

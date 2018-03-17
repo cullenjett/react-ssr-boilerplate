@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 require('babel-core/register')({
   plugins: ['syntax-dynamic-import', 'dynamic-import-node']
 });
