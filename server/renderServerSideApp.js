@@ -12,7 +12,6 @@ import configureStore from '../src/utils/configureStore';
 import fetchDataForRender from './fetchDataForRender';
 
 const renderServerSideApp = (req, res) => {
-  console.log('renderServerSideApp start');
   const store = configureStore(undefined, { logger: false });
 
   fetchDataForRender(req, store).then(() => {
@@ -46,7 +45,6 @@ const renderServerSideApp = (req, res) => {
         markup
       });
 
-      console.log(fullMarkup);
       res.status(200).send(fullMarkup);
     }
   });

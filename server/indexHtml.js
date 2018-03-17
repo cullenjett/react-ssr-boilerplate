@@ -48,7 +48,7 @@ const jsScripts = bundles => {
   }, '');
 };
 
-const indexHtml = ({ helmet, initialState, markup, bundles }) => {
+const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
   const htmlAttrs = helmet.htmlAttributes.toString();
   const bodyAttrs = helmet.bodyAttributes.toString();
 
@@ -81,4 +81,4 @@ const indexHtml = ({ helmet, initialState, markup, bundles }) => {
   `;
 };
 
-export default indexHtml;
+export default IndexHtml;

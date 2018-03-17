@@ -14,6 +14,7 @@ Features:
 * Sass styles and autoprefixer
 * Node.js clusters for improved performance under load (production only)
 * Eslint and prettier both run on commit
+* Dockerized for production like a bawsss
 
 ## Do it!
 
@@ -22,6 +23,7 @@ Features:
 * Development: `npm start`
 * Test: `npm test`
 * Production: `npm run build && npm run start-prod`
+* Start Docker (production mode): `npm run docker`
 
 ## Current Quirks
 
