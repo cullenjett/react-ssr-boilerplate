@@ -18,6 +18,7 @@ const {
   prepareUrls
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
+const Loadable = require('react-loadable');
 
 const app = require('../server/app').default;
 
@@ -33,23 +34,25 @@ choosePort(HOST, DEFAULT_PORT)
 
     const urls = prepareUrls('http', HOST, port);
 
-    app.listen(port, HOST, err => {
-      if (err) {
-        return console.log(err);
-      }
+    Loadable.preloadAll().then(() => {
+      app.listen(port, HOST, err => {
+        if (err) {
+          return console.log(err);
+        }
 
-      if (isInteractive) {
-        clearConsole();
-      }
+        if (isInteractive) {
+          clearConsole();
+        }
 
-      console.log(
-        chalk.cyan(
-          `Running on local network at ${urls.lanUrlForConfig}:${port}`
-        )
-      );
-      console.log(chalk.cyan('Starting the development server...\n'));
+        console.log(
+          chalk.cyan(
+            `Running on local network at ${urls.lanUrlForConfig}:${port}`
+          )
+        );
+        console.log(chalk.cyan('Starting the development server...\n'));
 
-      openBrowser(urls.localUrlForBrowser);
+        openBrowser(urls.localUrlForBrowser);
+      });
     });
   })
   .catch(err => {
