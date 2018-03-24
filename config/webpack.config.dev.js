@@ -17,7 +17,6 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-    resolvePath('./polyfills'),
     'react-error-overlay',
     resolvePath('../src/index.js')
   ],
