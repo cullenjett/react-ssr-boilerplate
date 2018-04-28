@@ -7,7 +7,7 @@ import Loadable from 'react-loadable';
 import App from './App';
 import configureStore from './utils/configureStore';
 
-import './index.scss';
+import './styles/index.scss';
 
 const store = configureStore(window.__INITIAL_STATE__);
 

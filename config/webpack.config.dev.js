@@ -2,7 +2,6 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
@@ -14,6 +13,7 @@ const env = getClientEnvironment();
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
 module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
@@ -27,7 +27,6 @@ module.exports = {
     publicPath: env.raw.PUBLIC_URL + '/'
   },
   module: {
-    strictExportPresence: true,
     rules: [
       {
         test: /\.(js|jsx)$/,
@@ -43,30 +42,6 @@ module.exports = {
         include: resolvePath('../src')
       },
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx)$/,
-          /\.s?css$/,
-          /\.json$/,
-          /\.bmp$/,
-          /\.gif$/,
-          /\.jpe?g$/,
-          /\.png$/
-        ],
-        loader: 'file-loader',
-        options: {
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]'
-        }
-      },
-      {
         test: /\.(js|jsx)$/,
         include: resolvePath('../src'),
         loader: 'babel-loader',
@@ -78,12 +53,7 @@ module.exports = {
         test: /\.s?css$/,
         use: [
           'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1
-            }
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -104,16 +74,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin(env.forWebpackDefinePlugin),
     new webpack.HotModuleReplacementPlugin(),
     new CaseSensitivePathsPlugin(),
-    new WatchMissingNodeModulesPlugin(resolvePath('../node_modules')),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new webpack.optimize.CommonsChunkPlugin({
-      children: true
-    }),
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new LodashModuleReplacementPlugin(),
     new ReactLoadablePlugin({
       filename: 'build/react-loadable.json'
@@ -124,8 +88,5 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty'
-  },
-  performance: {
-    hints: false
   }
 };
