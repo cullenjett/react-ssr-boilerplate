@@ -8,16 +8,20 @@ if (env.raw.NODE_ENV === 'production') {
   assetManifest = require('../build/asset-manifest.json');
 } else {
   assetManifest = {
-    'node-modules.js': 'node-modules.bundle.js',
-    'main.js': 'main.bundle.js'
+    'main.js': '/main.bundle.js'
   };
 }
 
-const preloadScripts = () => {
-  const paths = [assetManifest['node-modules.js'], assetManifest['main.js']];
+const preloadScripts = bundles => {
+  const paths = [
+    assetManifest['main.js'],
+    ...bundles
+      .filter(b => b.file.endsWith('.js'))
+      .map(b => `${PUBLIC_URL}/${b.file}`)
+  ];
 
   return paths.reduce((string, path) => {
-    string += `<link rel="preload" as="script" href=${PUBLIC_URL}/${path} />`;
+    string += `<link rel="preload" as="script" href=${PUBLIC_URL}${path} />`;
     return string;
   }, '');
 };
@@ -27,7 +31,7 @@ const cssLinks = () => {
 
   if (env.raw.NODE_ENV === 'production') {
     return paths.reduce((string, path) => {
-      string += `<link rel="stylesheet" href=${PUBLIC_URL}/${path} />`;
+      string += `<link rel="stylesheet" href=${PUBLIC_URL}${path} />`;
       return string;
     }, '');
   } else {
@@ -37,13 +41,14 @@ const cssLinks = () => {
 
 const jsScripts = bundles => {
   const paths = [
-    assetManifest['node-modules.js'],
     assetManifest['main.js'],
-    ...bundles.filter(b => b.file.endsWith('.js')).map(b => b.file)
+    ...bundles
+      .filter(b => b.file.endsWith('.js'))
+      .map(b => `${PUBLIC_URL}/${b.file}`)
   ];
 
   return paths.reduce((string, path) => {
-    string += `<script type="text/javascript" src=${PUBLIC_URL}/${path}></script>`;
+    string += `<script type="text/javascript" src=${PUBLIC_URL}${path}></script>`;
     return string;
   }, '');
 };
@@ -58,7 +63,7 @@ const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
       <head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
-        ${preloadScripts()}
+        ${preloadScripts(bundles)}
         ${helmet.link.toString()}
         ${cssLinks()}
         ${helmet.style.toString()}

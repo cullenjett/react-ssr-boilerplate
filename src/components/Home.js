@@ -15,7 +15,7 @@ export class Home extends Component {
         });
 
         resolve();
-      }, 1000);
+      }, 500);
     });
   }
 

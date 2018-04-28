@@ -129,16 +129,6 @@ module.exports = {
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'node-modules',
-      minChunks(module) {
-        if (module.resource && /^.*\.(css|scss)$/.test(module.resource)) {
-          return false;
-        }
-
-        return module.context && module.context.indexOf('node_modules') >= 0;
-      }
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
       children: true
     }),
     new webpack.optimize.ModuleConcatenationPlugin(),
