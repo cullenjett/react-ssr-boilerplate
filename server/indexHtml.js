@@ -13,44 +13,49 @@ if (env.raw.NODE_ENV === 'production') {
 }
 
 const preloadScripts = bundles => {
-  const paths = [
-    assetManifest['main.js'],
-    ...bundles
-      .filter(b => b.file.endsWith('.js'))
-      .map(b => `${PUBLIC_URL}/${b.file}`)
-  ];
+  const jsFilePaths = Object.keys(assetManifest)
+    .filter(file => file.match(/\.js$/))
+    .map(jsFile => assetManifest[jsFile]);
 
-  return paths.reduce((string, path) => {
-    string += `<link rel="preload" as="script" href=${PUBLIC_URL}${path} />`;
-    return string;
-  }, '');
+  const bundleFilePaths = [...bundles]
+    .filter(bundle => bundle.file.match(/\.js$/))
+    .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
+
+  return [...jsFilePaths, ...bundleFilePaths]
+    .map(
+      jsFilePath =>
+        `<link rel="preload" as="script" href="${jsFilePath}"></script>`
+    )
+    .join('');
 };
 
 const cssLinks = () => {
-  const paths = [assetManifest['main.css']];
-
-  if (env.raw.NODE_ENV === 'production') {
-    return paths.reduce((string, path) => {
-      string += `<link rel="stylesheet" href=${PUBLIC_URL}${path} />`;
-      return string;
-    }, '');
-  } else {
+  if (env.raw.NODE_ENV !== 'production') {
     return '';
   }
+
+  return Object.keys(assetManifest)
+    .filter(file => file.match(/\.css$/))
+    .map(cssFile => assetManifest[cssFile])
+    .map(cssFilePath => `<link rel="stylesheet" href="${cssFilePath}">`)
+    .join('');
 };
 
 const jsScripts = bundles => {
-  const paths = [
-    assetManifest['main.js'],
-    ...bundles
-      .filter(b => b.file.endsWith('.js'))
-      .map(b => `${PUBLIC_URL}/${b.file}`)
-  ];
+  const jsFilePaths = Object.keys(assetManifest)
+    .filter(file => file.match(/\.js$/))
+    .map(jsFile => assetManifest[jsFile]);
 
-  return paths.reduce((string, path) => {
-    string += `<script type="text/javascript" src=${PUBLIC_URL}${path}></script>`;
-    return string;
-  }, '');
+  const bundleFilePaths = [...bundles]
+    .filter(bundle => bundle.file.match(/\.js$/))
+    .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
+
+  return [...jsFilePaths, ...bundleFilePaths]
+    .map(
+      jsFilePath =>
+        `<script type="text/javascript" src="${jsFilePath}"></script>`
+    )
+    .join('');
 };
 
 const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
