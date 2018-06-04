@@ -1,6 +1,6 @@
 {
   "name": "react-ssr-boilerplate",
-  "version": "2.6.1",
+  "version": "2.6.2",
   "private": true,
   "scripts": {
     "start": "nodemon --watch server scripts/start.js",
