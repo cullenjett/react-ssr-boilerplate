@@ -32,8 +32,7 @@ const App = () => (
     <nav>
       <NavLink exact to="/" activeClassName="active">
         Home
-      </NavLink>
-      <span>&nbsp;</span>
+      </NavLink>{' '}
       <NavLink exact to="/about" activeClassName="active">
         About
       </NavLink>

@@ -1,7 +1,19 @@
 /* eslint-disable no-console */
 
 require('babel-core/register')({
-  plugins: ['syntax-dynamic-import', 'dynamic-import-node']
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        camelCase: true,
+        extensions: ['.css', '.scss'],
+        generateScopedName: '[hash:base64]',
+        ignore: '../src/styles'
+      }
+    ],
+    'syntax-dynamic-import',
+    'dynamic-import-node'
+  ]
 });
 
 const cluster = require('cluster');

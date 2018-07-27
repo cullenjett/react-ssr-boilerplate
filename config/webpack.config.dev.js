@@ -51,6 +51,36 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
+        exclude: [resolvePath('../src/styles')],
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              camelCase: true,
+              modules: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                autoprefixer({
+                  browsers: ['last 2 versions', 'not ie < 11'],
+                  flexbox: 'no-2009'
+                })
+              ]
+            }
+          },
+          'sass-loader',
+          'import-glob-loader'
+        ]
+      },
+      {
+        test: /\.s?css$/,
+        include: [resolvePath('../src/styles')],
         use: [
           'style-loader',
           'css-loader',

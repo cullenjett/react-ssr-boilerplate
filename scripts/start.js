@@ -1,6 +1,17 @@
 /* eslint-disable no-console */
 require('babel-core/register')({
-  plugins: ['syntax-dynamic-import', 'dynamic-import-node']
+  plugins: [
+    [
+      'css-modules-transform',
+      {
+        camelCase: true,
+        extensions: ['.css', '.scss'],
+        generateScopedName: '[hash:base64]'
+      }
+    ],
+    'syntax-dynamic-import',
+    'dynamic-import-node'
+  ]
 });
 
 process.env.NODE_ENV = 'development';
