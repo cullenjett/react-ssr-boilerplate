@@ -1,7 +1,7 @@
 import os from 'os';
 import path from 'path';
 import express from 'express';
-import shrinkRay from 'shrink-ray';
+import compression from 'compression';
 import helmet from 'helmet';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -19,7 +19,7 @@ if (process.env.PUBLIC_URL === undefined) {
   );
 }
 
-app.use(shrinkRay());
+app.use(compression());
 app.use(helmet());
 
 function toMb(bytes) {
