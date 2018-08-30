@@ -7,9 +7,10 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import morgan from 'morgan';
+import Loadable from 'react-loadable';
 
 import config from '../config/webpack.config.dev';
-import renderServerSideApp from './renderServerSideApp';
+import { purgeCacheOnChange } from './purgeCacheOnChange';
 
 const app = express();
 
@@ -89,10 +90,18 @@ if (process.env.NODE_ENV !== 'production') {
       heartbeat: 4000
     })
   );
+
+  purgeCacheOnChange(path.join(__dirname, '../'));
 }
 
 app.use(morgan('tiny'));
 
-app.get('*', renderServerSideApp);
+app.get('*', (req, res) => {
+  const renderServerSideApp = require('./renderServerSideApp').default;
+
+  Loadable.preloadAll().then(() => {
+    renderServerSideApp(req, res);
+  });
+});
 
 export default app;
