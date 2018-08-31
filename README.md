@@ -1,4 +1,4 @@
-# React Server Side Rendering Boilerplate ⚛️ -> 🎨
+# React Server Side Rendering Boilerplate ⚛️🎨
 
 Tools like [create-react-app](https://github.com/facebook/create-react-app) have made setting up client-side React apps trivial, but transitioning to SSR is still kind of a pain in the ass. The [Razzle](https://github.com/jaredpalmer/razzle) tool looks like an absolute beast, but sometimes you just want to see the whole picture. This is a sample setup for full-featured, server-rendered React applications.
 
@@ -43,3 +43,7 @@ Tools like [create-react-app](https://github.com/facebook/create-react-app) have
 - CSS modules are not enabled for files inside `src/styles` -- use this directory for global styles instead. This is configured in the webpack config files, so start there if you'd like to change anything.
 - Routing configuration can potentially be _slightly_ duplicated. All routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender` (in the `ROUTES_THAT_FETCH_DATA` array).
 - Environment variables should be added to both `.env` and `config/env.js` (in the `APP_ENV_VARS` array). This is a byproduct of my need for dynamic runtime environment variables. If you want to bake your environment variables into your bundle like a normal person you could modify the `forWebpackDefinePlugin` function inside `env.js` by removing the conditional and just returning line 27.
+
+## `cj-scripts`
+
+If you're interested in creating your own [react-scripts](https://github.com/facebook/create-react-app/tree/next/packages/react-scripts)-eque CLI that wraps up some of the concepts in this project take a look at my [cj-scripts](https://github.com/cullenjett/cj-scripts) repo.
