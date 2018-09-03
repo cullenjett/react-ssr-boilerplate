@@ -1,29 +1,25 @@
 const dotenvVars = require('dotenv').config().parsed;
 
-// Put any new environment variable keys here
-const APP_ENV_VARS = ['NODE_ENV', 'PUBLIC_URL'];
+const packageJson = require('../package.json');
+process.env.VERSION = packageJson.version;
 
-if (!process.env.NODE_ENV) {
-  throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
-  );
-}
+const BAKED_IN_ENV_VARS = ['NODE_ENV', 'PUBLIC_URL', 'VERSION'];
 
-function getClientEnvironment() {
+function getAppEnv() {
   const raw = Object.keys(dotenvVars || {}).reduce(
     (env, key) => {
       env[key] = process.env[key];
       return env;
     },
-    APP_ENV_VARS.reduce((env, key) => {
-      env[key] = process.env[key] || '';
-      return env;
-    }, {})
+    {
+      NODE_ENV: process.env.NODE_ENV,
+      VERSION: process.env.VERSION
+    }
   );
 
   const forWebpackDefinePlugin = {
     'process.env': Object.keys(raw).reduce((env, key) => {
-      if (key === 'NODE_ENV') {
+      if (BAKED_IN_ENV_VARS.includes(key)) {
         env[key] = JSON.stringify(raw[key]);
       } else {
         env[key] = `process.env.${key}`;
@@ -39,4 +35,6 @@ function getClientEnvironment() {
   return { raw, forIndexHtml, forWebpackDefinePlugin };
 }
 
-module.exports = getClientEnvironment;
+module.exports = {
+  getAppEnv
+};

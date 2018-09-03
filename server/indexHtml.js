@@ -1,6 +1,6 @@
-import getClientEnvironment from '../config/env';
+import { getAppEnv } from '../config/env';
 
-const env = getClientEnvironment();
+const env = getAppEnv();
 const PUBLIC_URL = env.raw.PUBLIC_URL;
 let assetManifest;
 

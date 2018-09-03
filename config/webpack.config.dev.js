@@ -6,9 +6,9 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
 
-const getClientEnvironment = require('./env');
+const { getAppEnv } = require('./env');
 
-const env = getClientEnvironment();
+const env = getAppEnv();
 
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 

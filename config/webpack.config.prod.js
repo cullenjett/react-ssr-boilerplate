@@ -9,9 +9,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const getClientEnvironment = require('./env');
+const { getAppEnv } = require('./env');
 
-const env = getClientEnvironment();
+const env = getAppEnv();
 
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
