@@ -8,6 +8,7 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import morgan from 'morgan';
 import Loadable from 'react-loadable';
+import chalk from 'chalk';
 
 import config from '../config/webpack.config.dev';
 import { purgeCacheOnChange } from './purgeCacheOnChange';
@@ -16,7 +17,9 @@ const app = express();
 
 if (process.env.PUBLIC_URL === undefined) {
   throw new Error(
-    'process.env.PUBLIC_URL must be defined. Did you copy .env_SAMPLE to .env?'
+    chalk.red(
+      `process.env.PUBLIC_URL must be defined. Did you copy .env_SAMPLE to .env?`
+    )
   );
 }
 

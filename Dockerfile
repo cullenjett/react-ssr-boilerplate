@@ -1,5 +1,5 @@
 # build ===============================
-FROM node:9 as build
+FROM node:10 as build
 
 WORKDIR /react-ssr-boilerplate
 
@@ -12,7 +12,7 @@ COPY . .
 RUN npm run build
 
 # run ===============================
-FROM node:9-alpine as run
+FROM node:10-alpine as run
 
 WORKDIR /react-ssr-boilerplate
 

@@ -6,7 +6,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "start-prod": "export NODE_ENV=production && node server",
+    "start-prod": "NODE_ENV=production node server/index.js",
     "precommit": "lint-staged",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
@@ -86,9 +86,6 @@
     "webpack-dev-middleware": "^3.2.0",
     "webpack-hot-middleware": "^2.23.1",
     "webpack-manifest-plugin": "^2.0.3"
-  },
-  "prettier": {
-    "singleQuote": true
   },
   "jest": {
     "collectCoverageFrom": [
