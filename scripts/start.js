@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-require('babel-core/register')({
+require('@babel/register')({
   plugins: [
     [
       'css-modules-transform',
@@ -9,7 +9,7 @@ require('babel-core/register')({
         generateScopedName: '[hash:base64]'
       }
     ],
-    'syntax-dynamic-import',
+    '@babel/plugin-syntax-dynamic-import',
     'dynamic-import-node'
   ]
 });

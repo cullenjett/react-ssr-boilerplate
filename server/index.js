@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
-
-require('babel-core/register')({
+require('@babel/register')({
   plugins: [
     [
       'css-modules-transform',
@@ -11,7 +10,7 @@ require('babel-core/register')({
         ignore: '../src/styles'
       }
     ],
-    'syntax-dynamic-import',
+    '@babel/plugin-syntax-dynamic-import',
     'dynamic-import-node'
   ]
 });
