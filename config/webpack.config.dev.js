@@ -5,6 +5,7 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const { ReactLoadablePlugin } = require('react-loadable/webpack');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 
 const { getAppEnv } = require('./env');
 
@@ -17,7 +18,6 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-    'react-error-overlay',
     resolvePath('../src/index.js')
   ],
   output: {
@@ -109,6 +109,7 @@ module.exports = {
     new CaseSensitivePathsPlugin(),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new LodashModuleReplacementPlugin(),
+    new ErrorOverlayPlugin(),
     new ReactLoadablePlugin({
       filename: 'build/react-loadable.json'
     })
