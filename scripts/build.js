@@ -57,7 +57,11 @@ measureFileSizesBeforeBuild(resolvePath('../build'))
   );
 
 function build(previousFileSizes) {
-  console.log('Creating an optimized production build...');
+  console.log(
+    chalk.blue(`
+      Creating an optimized production build...
+    `)
+  );
 
   const compiler = webpack(config);
 

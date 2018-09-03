@@ -53,9 +53,14 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
     }
 
     console.log(
-      chalk.cyan(`Running on local network at ${urls.lanUrlForConfig}:${port}`)
+      chalk.blue(`
+        * Running locally at ${urls.localUrlForBrowser}
+        * Running on your network at ${urls.lanUrlForConfig}:${port}
+      `),
+      chalk.gray(`
+        Starting dev server...
+      `)
     );
-    console.log(chalk.cyan('Starting the development server...\n'));
 
     openBrowser(urls.localUrlForBrowser);
   });
