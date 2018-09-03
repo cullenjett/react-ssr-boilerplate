@@ -13,7 +13,8 @@ const LoadableHome = Loadable({
 });
 
 const LoadableAbout = Loadable({
-  loader: () => import(/* webpackChunkName: 'about' */ './components/About'),
+  loader: () =>
+    import(/* webpackChunkName: 'about' */ './components/about/About'),
   loading() {
     return <div>Loading...</div>;
   }

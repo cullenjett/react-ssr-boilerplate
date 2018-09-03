@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+
+import { createSession } from '../actions';
 
 export class Home extends Component {
   static fetchData(store) {
-    // Here we're mimicing an async action creator
-    return new Promise(resolve => {
-      setTimeout(() => {
-        store.dispatch({
-          type: 'CREATE_SESSION',
-          session: {
-            user: { id: 1, name: 'Cullen Jett' }
-          }
-        });
+    // Normally you'd pass action creators to "connect" from react-redux,
+    // but since this is a static method you don't have access to "this.props".
 
-        resolve();
-      }, 500);
-    });
+    // Dispatching actions from "static fetchData()" will look like this (make sure to return a Promise):
+    return store.dispatch(createSession({ id: 1, name: 'Cullen Jett' }));
   }
 
   render() {
@@ -28,4 +20,4 @@ export class Home extends Component {
   }
 }
 
-export default withRouter(connect()(Home));
+export default Home;
