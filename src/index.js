@@ -1,25 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import Loadable from 'react-loadable';
+if (browserSupportsAllFeatures()) {
+  require('./main');
+} else {
+  loadScript(window.assetManifest['polyfills.js'], () => require('./main'));
+}
 
-import App from './App';
-import configureStore from './utils/configureStore';
+function browserSupportsAllFeatures() {
+  return window.Promise && Object.assign;
+}
 
-import './styles/index.scss';
+function loadScript(src, done) {
+  const script = document.createElement('script');
 
-const store = configureStore(window.__INITIAL_STATE__);
+  script.src = src;
+  script.onload = () => {
+    done();
+  };
+  script.onerror = () => {
+    done(new Error('Failed to load script ' + src));
+  };
 
-window.render = () => {
-  Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(
-      <Provider store={store}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </Provider>,
-      document.getElementById('root')
-    );
-  });
-};
+  document.head.appendChild(script);
+}

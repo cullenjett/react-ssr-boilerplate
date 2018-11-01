@@ -13,15 +13,12 @@ if (env.raw.NODE_ENV === 'production') {
 }
 
 const preloadScripts = bundles => {
-  const jsFilePaths = Object.keys(assetManifest)
-    .filter(file => file.match(/\.js$/))
-    .map(jsFile => assetManifest[jsFile]);
-
+  const mainJS = assetManifest['main.js'];
   const bundleFilePaths = [...bundles]
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
-  return [...jsFilePaths, ...bundleFilePaths]
+  return [mainJS, ...bundleFilePaths]
     .map(
       jsFilePath =>
         `<link rel="preload" as="script" href="${jsFilePath}"></script>`
@@ -42,15 +39,12 @@ const cssLinks = () => {
 };
 
 const jsScripts = bundles => {
-  const jsFilePaths = Object.keys(assetManifest)
-    .filter(file => file.match(/\.js$/))
-    .map(jsFile => assetManifest[jsFile]);
-
+  const mainJS = assetManifest['main.js'];
   const bundleFilePaths = [...bundles]
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
-  return [...jsFilePaths, ...bundleFilePaths]
+  return [mainJS, ...bundleFilePaths]
     .map(
       jsFilePath =>
         `<script type="text/javascript" src="${jsFilePath}"></script>`
@@ -81,11 +75,10 @@ const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
         <script>
           window.process = ${env.forIndexHtml};
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+          window.assetManifest = ${JSON.stringify(assetManifest)}
         </script>
 
         ${jsScripts(bundles)}
-
-        <script>window.render();</script>
       </body>
     </html>
   `;

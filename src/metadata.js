@@ -15,10 +15,6 @@ export const meta = [
   {
     name: 'description',
     content: 'Boilerplate for React apps with routing & server side rendering'
-  },
-  {
-    name: 'theme-color',
-    content: '#00D1E8'
   }
 ];
 

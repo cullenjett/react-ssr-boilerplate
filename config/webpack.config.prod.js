@@ -22,7 +22,10 @@ if (env.raw.NODE_ENV !== 'production') {
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
-  entry: [resolvePath('./polyfills'), resolvePath('../src/index.js')],
+  entry: {
+    polyfills: resolvePath('../src/polyfills.js'),
+    main: resolvePath('../src/index.js')
+  },
   output: {
     path: resolvePath('../build'),
     filename: 'static/js/[name].[chunkhash:8].js',
