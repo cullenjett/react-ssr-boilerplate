@@ -9,6 +9,7 @@ Tools like [create-react-app](https://github.com/facebook/create-react-app) have
 - React Router v4
 - Code splitting
 - Webpack 4
+- Conditionally load pollyfills -- only ship bloat to outdated browsers
 - React Helmet for dynamic manipulation of the document `<head />`
 - Dev server with hot-reloading
 - Jest and Enzyme config ready to test the crap out of some stuff
