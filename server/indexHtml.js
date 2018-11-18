@@ -18,7 +18,7 @@ const preloadScripts = bundles => {
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
-  return [mainJS, ...bundleFilePaths]
+  return [...bundleFilePaths, mainJS]
     .map(
       jsFilePath =>
         `<link rel="preload" as="script" href="${jsFilePath}"></script>`
@@ -44,7 +44,7 @@ const jsScripts = bundles => {
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
-  return [mainJS, ...bundleFilePaths]
+  return [...bundleFilePaths, mainJS]
     .map(
       jsFilePath =>
         `<script type="text/javascript" src="${jsFilePath}"></script>`
