@@ -58,7 +58,7 @@ app.get('/system', (req, res) => {
 app.use(
   process.env.PUBLIC_URL,
   express.static(path.join(__dirname, '../build'), {
-    maxage: '30 days'
+    maxage: '1 year'
   })
 );
 
