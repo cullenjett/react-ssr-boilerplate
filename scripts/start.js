@@ -15,12 +15,11 @@ require('@babel/register')({
 });
 
 process.env.NODE_ENV = 'development';
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 process.on('unhandledRejection', err => {
   throw err;
 });
-
-require('../config/env');
 
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
@@ -30,7 +29,7 @@ const {
 } = require('react-dev-utils/WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
 
-const app = require('../server/app').default;
+const { app } = require('../server/app');
 
 const DEFAULT_PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';

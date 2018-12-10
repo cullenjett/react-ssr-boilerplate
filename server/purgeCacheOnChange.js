@@ -2,7 +2,7 @@
 
 import chokidar from 'chokidar';
 
-export function purgeCacheOnChange(path) {
+export const purgeCacheOnChange = path => {
   const watcher = chokidar.watch(path);
 
   watcher.on('ready', () => {
@@ -16,4 +16,4 @@ export function purgeCacheOnChange(path) {
       });
     });
   });
-}
+};

@@ -13,6 +13,7 @@ function getAppEnv() {
     },
     {
       NODE_ENV: process.env.NODE_ENV,
+      PUBLIC_URL: process.env.PUBLIC_URL,
       VERSION: process.env.VERSION
     }
   );

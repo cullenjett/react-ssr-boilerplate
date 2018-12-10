@@ -11,7 +11,7 @@ const ROUTES_THAT_FETCH_DATA = [
   }
 ];
 
-const fetchDataForRender = (req, store) => {
+export const fetchDataForRender = (req, store) => {
   const promises = [];
 
   ROUTES_THAT_FETCH_DATA.some(route => {
@@ -28,5 +28,3 @@ const fetchDataForRender = (req, store) => {
 
   return Promise.all(promises);
 };
-
-export default fetchDataForRender;

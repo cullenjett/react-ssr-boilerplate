@@ -10,7 +10,7 @@ const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const { getAppEnv } = require('./env');
 
 const env = getAppEnv();
-
+const { PUBLIC_URL = '' } = env.raw;
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
 module.exports = {
@@ -24,7 +24,7 @@ module.exports = {
     path: resolvePath('../build'),
     filename: '[name].bundle.js',
     chunkFilename: '[name].chunk.js',
-    publicPath: env.raw.PUBLIC_URL + '/'
+    publicPath: PUBLIC_URL + '/'
   },
   module: {
     rules: [

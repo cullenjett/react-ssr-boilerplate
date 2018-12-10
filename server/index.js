@@ -15,12 +15,15 @@ require('@babel/register')({
   ]
 });
 
+process.env.NODE_ENV = 'production';
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 const cluster = require('cluster');
 const Loadable = require('react-loadable');
 
-const app = require('./app').default;
+const { app } = require('./app');
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 // Use the native Node.js cluster module to create a worker processes for each CPU
 if (cluster.isMaster) {
@@ -37,13 +40,13 @@ if (cluster.isMaster) {
   });
 } else {
   Loadable.preloadAll().then(() => {
-    app.listen(port, err => {
+    app.listen(PORT, err => {
       if (err) {
         return console.error(err);
       }
 
       console.info(
-        `Server running on port ${port} -- Worker pid: ${
+        `Server running on port ${PORT} -- Worker pid: ${
           cluster.worker.process.pid
         }`
       );

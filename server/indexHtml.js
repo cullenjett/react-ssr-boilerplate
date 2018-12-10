@@ -1,10 +1,10 @@
 import { getAppEnv } from '../config/env';
 
 const env = getAppEnv();
-const PUBLIC_URL = env.raw.PUBLIC_URL;
-let assetManifest;
+const { NODE_ENV, PUBLIC_URL = '' } = env.raw;
 
-if (env.raw.NODE_ENV === 'production') {
+let assetManifest;
+if (NODE_ENV === 'production') {
   assetManifest = require('../build/asset-manifest.json');
 } else {
   assetManifest = {
@@ -14,7 +14,7 @@ if (env.raw.NODE_ENV === 'production') {
 
 const preloadScripts = bundles => {
   const mainJS = assetManifest['main.js'];
-  const bundleFilePaths = [...bundles]
+  const bundleFilePaths = bundles
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
@@ -27,7 +27,7 @@ const preloadScripts = bundles => {
 };
 
 const cssLinks = () => {
-  if (env.raw.NODE_ENV !== 'production') {
+  if (NODE_ENV !== 'production') {
     return '';
   }
 
@@ -40,7 +40,7 @@ const cssLinks = () => {
 
 const jsScripts = bundles => {
   const mainJS = assetManifest['main.js'];
-  const bundleFilePaths = [...bundles]
+  const bundleFilePaths = bundles
     .filter(bundle => bundle.file.match(/\.js$/))
     .map(jsBundle => `${PUBLIC_URL}/${jsBundle.file}`);
 
@@ -52,7 +52,7 @@ const jsScripts = bundles => {
     .join('');
 };
 
-const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
+export const indexHtml = ({ helmet, initialState, markup, bundles }) => {
   const htmlAttrs = helmet.htmlAttributes.toString();
   const bodyAttrs = helmet.bodyAttributes.toString();
 
@@ -83,5 +83,3 @@ const IndexHtml = ({ helmet, initialState, markup, bundles }) => {
     </html>
   `;
 };
-
-export default IndexHtml;

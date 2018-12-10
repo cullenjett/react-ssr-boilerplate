@@ -12,7 +12,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { getAppEnv } = require('./env');
 
 const env = getAppEnv();
-
+const { PUBLIC_URL = '' } = env.raw;
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
 if (env.raw.NODE_ENV !== 'production') {
@@ -30,7 +30,7 @@ module.exports = {
     path: resolvePath('../build'),
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: env.raw.PUBLIC_URL + '/'
+    publicPath: PUBLIC_URL + '/'
   },
   module: {
     rules: [
