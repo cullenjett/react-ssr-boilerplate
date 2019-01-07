@@ -12,7 +12,8 @@
     "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
     "docker:build": "docker build --rm -t cullenjett/react-ssr-boilerplate .",
     "docker:start": "docker run --rm -it -p 3000:3000 cullenjett/react-ssr-boilerplate",
-    "docker": "npm run docker:build && npm run docker:start"
+    "docker": "npm run docker:build && npm run docker:start",
+    "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "lint-staged": {
     "*.js": [
@@ -114,5 +115,8 @@
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ]
+  },
+  "devDependencies": {
+    "@storybook/react": "^4.1.4"
   }
 }
