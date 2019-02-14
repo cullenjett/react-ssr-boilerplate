@@ -1,4 +1,7 @@
 /* eslint-disable no-console */
+process.env.NODE_ENV = 'development';
+process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
+
 require('@babel/register')({
   plugins: [
     [
@@ -9,27 +12,23 @@ require('@babel/register')({
         generateScopedName: '[hash:base64]'
       }
     ],
-    '@babel/plugin-syntax-dynamic-import',
     'dynamic-import-node'
   ]
 });
 
-process.env.NODE_ENV = 'development';
-process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
-
-process.on('unhandledRejection', err => {
-  throw err;
-});
-
 const chalk = require('chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
+const openBrowser = require('react-dev-utils/openBrowser');
 const {
   choosePort,
   prepareUrls
 } = require('react-dev-utils/WebpackDevServerUtils');
-const openBrowser = require('react-dev-utils/openBrowser');
 
 const { app } = require('../server/app');
+
+process.on('unhandledRejection', err => {
+  throw err;
+});
 
 const DEFAULT_PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
@@ -51,16 +50,15 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
       clearConsole();
     }
 
-    console.log(
-      chalk.blue(`
-        * Running locally at ${urls.localUrlForBrowser}
-        * Running on your network at ${urls.lanUrlForConfig}:${port}
-      `),
-      chalk.gray(`
-        Starting dev server...
-      `)
-    );
+    console.log(chalk.white('\n\tStarting dev server...'));
 
     openBrowser(urls.localUrlForBrowser);
+
+    console.log(
+      chalk.blue(`
+        Running locally at ${urls.localUrlForBrowser}
+        Running on your network at ${urls.lanUrlForConfig}:${port}
+      `)
+    );
   });
 });
