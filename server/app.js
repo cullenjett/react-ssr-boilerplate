@@ -15,14 +15,14 @@ app.use(helmet());
 
 app.use(
   PUBLIC_URL,
-  express.static(path.join(__dirname, '../build'), {
+  express.static(path.resolve(__dirname, '../build'), {
     maxage: '1 year'
   })
 );
 
 app.use(
   PUBLIC_URL,
-  express.static(path.join(__dirname, '../public'), {
+  express.static(path.resolve(__dirname, '../public'), {
     maxage: '30 days'
   })
 );
@@ -31,7 +31,7 @@ app.use(morgan('tiny'));
 
 if (NODE_ENV !== 'production') {
   devMiddleware(app);
-  purgeCacheOnChange(path.join(__dirname, '../'));
+  purgeCacheOnChange(path.resolve(__dirname, '../'));
 }
 
 app.get('*', (req, res) => {

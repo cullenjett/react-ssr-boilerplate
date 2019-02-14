@@ -17,14 +17,17 @@ const {
 } = require('react-dev-utils/FileSizeReporter');
 
 const config = require('../config/webpack.config.prod');
+// const serverConfig = require('../config/webpack.server.prod');
 
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
+
 const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 
 measureFileSizesBeforeBuild(resolvePath('../build'))
   .then(previousFileSizes => {
     fs.emptyDirSync(resolvePath('../build'));
+    // fs.emptyDirSync(resolvePath('../dist'));
     return build(previousFileSizes);
   })
   .then(
@@ -46,6 +49,15 @@ function build(previousFileSizes) {
   const compiler = webpack(config);
 
   return new Promise((resolve, reject) => {
+    // webpack(serverConfig, err => {
+    //   if (err) {
+    //     console.log(err);
+    //   }
+    //   console.log('=================');
+    //   console.log('SERVER DONE');
+    //   console.log('=================');
+    // });
+
     compiler.run((err, stats) => {
       if (err) {
         return reject(err);
@@ -57,7 +69,7 @@ function build(previousFileSizes) {
         return reject(new Error(messages.errors.join('\n\n')));
       }
 
-      return resolve({
+      resolve({
         stats,
         previousFileSizes,
         warnings: messages.warnings

@@ -1,22 +1,22 @@
 /* eslint-disable no-console */
-require('@babel/register')({
-  plugins: [
-    [
-      'css-modules-transform',
-      {
-        camelCase: true,
-        extensions: ['.css', '.scss'],
-        generateScopedName: '[hash:base64]',
-        ignore: '../src/styles'
-      }
-    ],
-    '@babel/plugin-syntax-dynamic-import',
-    'dynamic-import-node'
-  ]
-});
+// require('@babel/register')({
+//   plugins: [
+//     [
+//       'css-modules-transform',
+//       {
+//         camelCase: true,
+//         extensions: ['.css', '.scss'],
+//         generateScopedName: '[hash:base64]',
+//         ignore: '../src/styles'
+//       }
+//     ],
+//     '@babel/plugin-syntax-dynamic-import',
+//     'dynamic-import-node'
+//   ]
+// });
 
-process.env.NODE_ENV = 'production';
-process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
+// process.env.NODE_ENV = 'production';
+// process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 const cluster = require('cluster');
 const Loadable = require('react-loadable');

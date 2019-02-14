@@ -5,8 +5,10 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "build:server": "PUBLIC_URL=\"\" NODE_ENV=production webpack --config ./config/webpack.server.prod.js",
     "test": "node scripts/test.js --env=jsdom",
     "start-prod": "node server/index.js",
+    "start-prod:server": "PUBLIC_URL=\"\" NODE_ENV=production node dist/server.js",
     "precommit": "lint-staged",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
@@ -85,9 +87,11 @@
     "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^1.1.2",
     "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.3",
     "webpack-dev-middleware": "^3.5.0",
     "webpack-hot-middleware": "^2.24.3",
-    "webpack-manifest-plugin": "^2.0.4"
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-node-externals": "^1.7.2"
   },
   "jest": {
     "collectCoverageFrom": [
