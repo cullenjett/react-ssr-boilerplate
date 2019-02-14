@@ -12,8 +12,6 @@ if (env.raw.NODE_ENV !== 'production') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
 
-console.log('RUNNING SERVER WEBPACK CONFIG');
-
 module.exports = {
   mode: 'production',
   target: 'node',

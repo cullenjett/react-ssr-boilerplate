@@ -2,22 +2,22 @@
 process.env.NODE_ENV = 'production';
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
 
-process.on('unhandledRejection', err => {
-  throw err;
-});
-
-const path = require('path');
 const chalk = require('chalk');
-const fs = require('fs-extra');
-const webpack = require('webpack');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const fs = require('fs-extra');
+const path = require('path');
+const webpack = require('webpack');
 const {
   measureFileSizesBeforeBuild,
   printFileSizesAfterBuild
 } = require('react-dev-utils/FileSizeReporter');
 
-const config = require('../config/webpack.config.prod');
-// const serverConfig = require('../config/webpack.server.prod');
+const clientConfig = require('../config/webpack.config.prod');
+const serverConfig = require('../config/webpack.server.prod');
+
+process.on('unhandledRejection', err => {
+  throw err;
+});
 
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
@@ -27,7 +27,7 @@ const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 measureFileSizesBeforeBuild(resolvePath('../build'))
   .then(previousFileSizes => {
     fs.emptyDirSync(resolvePath('../build'));
-    // fs.emptyDirSync(resolvePath('../dist'));
+    fs.emptyDirSync(resolvePath('../dist'));
     return build(previousFileSizes);
   })
   .then(
@@ -40,39 +40,37 @@ measureFileSizesBeforeBuild(resolvePath('../build'))
   );
 
 function build(previousFileSizes) {
-  console.log(
-    chalk.blue(`
-      Creating an optimized production build...
-    `)
-  );
+  console.log(chalk.blue('\n\tCreating an optimized production build...\n'));
 
-  const compiler = webpack(config);
+  const clientCompiler = webpack(clientConfig);
+  const serverCompiler = webpack(serverConfig);
 
   return new Promise((resolve, reject) => {
-    // webpack(serverConfig, err => {
-    //   if (err) {
-    //     console.log(err);
-    //   }
-    //   console.log('=================');
-    //   console.log('SERVER DONE');
-    //   console.log('=================');
-    // });
-
-    compiler.run((err, stats) => {
+    clientCompiler.run((err, stats) => {
       if (err) {
         return reject(err);
+      } else {
+        console.log(chalk.white('✓ Client webpack build complete'));
       }
 
-      const messages = formatWebpackMessages(stats.toJson({}, true));
+      serverCompiler.run(err => {
+        if (err) {
+          return reject(err);
+        } else {
+          console.log(chalk.white('✓ Server webpack build complete'));
+        }
 
-      if (messages.errors.length) {
-        return reject(new Error(messages.errors.join('\n\n')));
-      }
+        const messages = formatWebpackMessages(stats.toJson({}, true));
 
-      resolve({
-        stats,
-        previousFileSizes,
-        warnings: messages.warnings
+        if (messages.errors.length) {
+          return reject(new Error(messages.errors.join('\n\n')));
+        }
+
+        resolve({
+          stats,
+          previousFileSizes,
+          warnings: messages.warnings
+        });
       });
     });
   });

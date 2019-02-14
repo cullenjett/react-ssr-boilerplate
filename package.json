@@ -5,7 +5,6 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "build:server": "PUBLIC_URL=\"\" NODE_ENV=production webpack --config ./config/webpack.server.prod.js",
     "test": "node scripts/test.js --env=jsdom",
     "start-prod": "node server/index.js",
     "start-prod:server": "PUBLIC_URL=\"\" NODE_ENV=production node dist/server.js",
