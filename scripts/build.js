@@ -27,7 +27,6 @@ const resolvePath = relativePath => path.resolve(__dirname, relativePath);
 measureFileSizesBeforeBuild(resolvePath('../build'))
   .then(previousFileSizes => {
     fs.emptyDirSync(resolvePath('../build'));
-    fs.emptyDirSync(resolvePath('../dist'));
     return build(previousFileSizes);
   })
   .then(

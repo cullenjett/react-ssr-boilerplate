@@ -20,7 +20,7 @@ module.exports = {
   },
   entry: './server/index.js',
   output: {
-    path: resolvePath('../dist'),
+    path: resolvePath('../build'),
     filename: 'server.js',
     publicPath: PUBLIC_URL + '/'
   },
