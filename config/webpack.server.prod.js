@@ -18,11 +18,12 @@ module.exports = {
   node: {
     __dirname: true
   },
-  entry: './server/index.js',
+  entry: './server/app.js',
   output: {
     path: resolvePath('../build'),
     filename: 'server.js',
-    publicPath: PUBLIC_URL + '/'
+    publicPath: PUBLIC_URL + '/',
+    libraryTarget: 'commonjs2'
   },
   module: {
     rules: [

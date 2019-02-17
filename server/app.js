@@ -4,22 +4,24 @@ import compression from 'compression';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-import { devMiddleware } from './devMiddleware';
-import { purgeCacheOnChange } from './purgeCacheOnChange';
+import { renderServerSideApp } from './renderServerSideApp';
 
-const { NODE_ENV, PUBLIC_URL = '' } = process.env;
+// This export is used by our initialization code in /scripts
 export const app = express();
+const { PUBLIC_URL = '' } = process.env;
 
 app.use(compression());
 app.use(helmet());
 
+// Serve generated assets
 app.use(
   PUBLIC_URL,
   express.static(path.resolve(__dirname, '../build'), {
-    maxage: '1 year'
+    maxage: Infinity
   })
 );
 
+// Serve static assets in /public
 app.use(
   PUBLIC_URL,
   express.static(path.resolve(__dirname, '../public'), {
@@ -29,15 +31,4 @@ app.use(
 
 app.use(morgan('tiny'));
 
-if (NODE_ENV !== 'production') {
-  devMiddleware(app);
-  purgeCacheOnChange(path.resolve(__dirname, '../'));
-}
-
-app.get('*', (req, res) => {
-  // We use 'require' inside this handler function
-  // so that when purgeCacheOnChange() (see above) runs we pull in the most recent code.
-  // https://codeburst.io/dont-use-nodemon-there-are-better-ways-fc016b50b45e
-  const { renderServerSideApp } = require('./renderServerSideApp');
-  renderServerSideApp(req, res);
-});
+app.use(renderServerSideApp);

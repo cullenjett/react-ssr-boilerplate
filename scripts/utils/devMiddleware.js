@@ -2,9 +2,9 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import config from '../config/webpack.config.dev';
+import config from '../../config/webpack.config.dev';
 
-export const devMiddleware = app => {
+export const applyDevMiddleware = app => {
   const compiler = webpack(config);
 
   app.use(

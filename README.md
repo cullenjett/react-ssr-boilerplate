@@ -1,6 +1,6 @@
 # React Server Side Rendering Boilerplate ⚛️🎨
 
-Tools like [create-react-app](https://github.com/facebook/create-react-app) have made setting up client-side React apps trivial, but transitioning to SSR is still kind of a pain in the ass. [Next.js](https://nextjs.org) is a powerhouse, and the [Razzle](https://github.com/jaredpalmer/razzle) tool looks like an absolute beast, but sometimes you just want to see the whole picture. This is a sample setup for full-featured, server-rendered React applications.
+Tools like [create-react-app](https://github.com/facebook/create-react-app) have made setting up client-side React apps trivial, but transitioning to SSR is still kind of a pain in the ass. [Next.js](https://nextjs.org) is a powerhouse, and the [Razzle](https://github.com/jaredpalmer/razzle) tool looks like an absolute beast, but sometimes you just want to see the whole enchilada running your app. This is a sample setup for fully featured, server-rendered React applications.
 
 **What's included:**
 
@@ -9,7 +9,7 @@ Tools like [create-react-app](https://github.com/facebook/create-react-app) have
 - React Router
 - Conditionally load pollyfills -- only ship bloat to outdated browsers
 - React Helmet for dynamic manipulation of the document `<head />`
-- Dev server with hot-reloading
+- Dev server with hot-reloading styles
 - Jest and Enzyme config ready to test the crap out of some stuff
 - CSS Modules, Sass, and autoprefixer
 - Run-time environment variables
@@ -30,7 +30,7 @@ Tools like [create-react-app](https://github.com/facebook/create-react-app) have
 
 ## Production
 
-- `npm run build && npm run start-prod`
+- `npm run build && npm run start:prod`
   - Bundle the JS and fire up the Express server for production
 - `npm run docker`
   - Build and start a local Docker image in production mode (mostly useful for debugging)
@@ -41,9 +41,9 @@ This app has two main pieces: the server and the client code.
 
 #### Server (`server/`)
 
-A fairly simple Express application in `server/app.js` handles serving static assets (the generated CSS and JS code in `build/` and anything in `public/` like images and fonts), and sends any unrecognized GET requests to the React application via `server/renderServerSideApp.js`. That function is responsible for fetching server-side data before rendering (if applicable) via `server/fetchDataForRender.js` and then sending the rendered React application as a string injected inside the HTML-ish code in `server/indexHtml.js`.
+A fairly basic Express application in `server/app.js` handles serving static assets (the generated CSS and JS code in `build/` + anything in `public/` like images and fonts), and sends all other requests to the React application via `server/renderServerSideApp.js`. That function delegates the fetching of server-side data pre-rendering to `server/fetchDataForRender`, and then sends the rendered React application (as a string) injected inside the HTML-ish code in `server/indexHtml.js`.
 
-Middleware is added to the Express app during development (when `process.env.NODE_ENV !== 'production'`), and in production the `server/index.js` file is used to run the server with Node's `cluster` module to take advantage of multiple CPU cores.
+During development the server code is run with `@babel/register` and middleware is added to the Express app (see `scripts/start`), and in production we bundle the server code to `build/server` and the code in `scripts/startProd` is used to run the server with Node's `cluster` module to take advantage of multiple CPU cores.
 
 #### Client (`src/`)
 
@@ -59,9 +59,9 @@ Sometimes you'll want to make API calls on the server to fetch data **before** r
 
 ## Current Quirks
 
-- This app does **not** create a server bundle via webpack, only client-side bundles. That means some of the crazy things you can do with webpack (`import`ing images, for example) are not possible here without getting dirty.
-- CSS modules are disabled for any files inside `src/styles` -- use this directory for global styles instead. This is configured in the webpack config files, so start there if you'd like to change anything.
-- Routing configuration can potentially be _slightly_ duplicated. All routes should be defined in their normal React Router v4 fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender` (in the `ROUTES_THAT_FETCH_DATA` array).
+- This project does not have a webpack configuration that allows for the use of `url-loader` or `file-loader` (so no `import src from 'my-img.svg'`). Instead it relies on serving static assets via the `public/` directory. See `src/components/about/About.js` for a reference on how to work with assets in your app see.
+- CSS modules are disabled for any files inside `src/styles` -- use this directory for global styles instead. This is set in the webpack config files, so start there if you'd like to change anything.
+- All routes should be defined in their normal `react-router` fashion. However, any routes that need to have data fetched before rendering (on the server) need some extra configuration inside `sever/fetchDataForRender` (in the `ROUTES_THAT_FETCH_DATA` array).
 
 ## `cj-scripts`
 
