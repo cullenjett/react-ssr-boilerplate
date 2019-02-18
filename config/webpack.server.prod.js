@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const fs = require('fs');
 
 const { getAppEnv } = require('./env');
@@ -76,6 +77,15 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'].filter(
+      ext => useTs || !ext.includes('ts')
+    ),
+    plugins: [PnpWebpackPlugin]
+  },
+  resolveLoader: {
+    plugins: [PnpWebpackPlugin.moduleLoader(module)]
   },
   plugins: [
     useTs &&

@@ -10,6 +10,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const { GenerateSW } = require('workbox-webpack-plugin');
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const fs = require('fs');
 
 const { getAppEnv } = require('./env');
@@ -28,7 +30,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     polyfills: resolvePath('../src/polyfills.js'),
-    main: resolvePath('../src/index.js')
+    main: resolvePath('../src/index')
   },
   output: {
     path: resolvePath('../build'),
@@ -123,6 +125,15 @@ module.exports = {
       }
     ]
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'].filter(
+      ext => useTs || !ext.includes('ts')
+    ),
+    plugins: [PnpWebpackPlugin]
+  },
+  resolveLoader: {
+    plugins: [PnpWebpackPlugin.moduleLoader(module)]
+  },
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
@@ -149,6 +160,11 @@ module.exports = {
     }),
     new ReactLoadablePlugin({
       filename: 'build/react-loadable.json'
+    }),
+    new GenerateSW({
+      importWorkboxFrom: 'local',
+      exclude: [/\.map$/, /asset-manifest\.json$/, /react-loadable.json/],
+      offlineGoogleAnalytics: false
     }),
     useTs &&
       new ForkTsCheckerWebpackPlugin({

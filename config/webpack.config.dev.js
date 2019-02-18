@@ -8,6 +8,7 @@ const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const fs = require('fs');
 
 const { getAppEnv } = require('./env');
@@ -22,7 +23,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-    resolvePath('../src/index.js')
+    resolvePath('../src/index')
   ],
   output: {
     path: resolvePath('../build'),
@@ -116,6 +117,15 @@ module.exports = {
         ]
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'].filter(
+      ext => useTs || !ext.includes('ts')
+    ),
+    plugins: [PnpWebpackPlugin]
+  },
+  resolveLoader: {
+    plugins: [PnpWebpackPlugin.moduleLoader(module)]
   },
   plugins: [
     new webpack.DefinePlugin(env.forWebpackDefinePlugin),
