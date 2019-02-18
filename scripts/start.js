@@ -3,6 +3,8 @@ process.env.NODE_ENV = 'development';
 process.env.PUBLIC_URL = process.env.PUBLIC_URL || '';
 
 require('@babel/register')({
+  presets: ['@babel/preset-typescript'],
+  extensions: ['.js', '.jsx', '.ts', '.tsx'],
   plugins: [
     [
       'css-modules-transform',
@@ -59,7 +61,7 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
 
   const urls = prepareUrls('http', HOST, port);
 
-  server.listen(port, HOST, err => {
+  const srv = server.listen(port, HOST, err => {
     if (err) {
       return console.log(err);
     }
@@ -67,6 +69,13 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
     if (isInteractive) {
       clearConsole();
     }
+
+    ['SIGINT', 'SIGTERM'].forEach(sig => {
+      process.on(sig, () => {
+        srv.close();
+        process.exit();
+      });
+    });
 
     console.log(chalk.white('\n\tStarting dev server...'));
 

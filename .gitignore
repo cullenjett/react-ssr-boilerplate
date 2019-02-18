@@ -17,6 +17,9 @@
 .env.test.local
 .env.production.local
 
+# vscode plugin: local-history
+.history
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

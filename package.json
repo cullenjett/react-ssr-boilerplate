@@ -119,5 +119,8 @@
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
     ]
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.3.3"
   }
 }
