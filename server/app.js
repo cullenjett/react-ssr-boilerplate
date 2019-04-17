@@ -3,6 +3,7 @@ import express from 'express';
 import compression from 'compression';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import responseTime from 'response-time';
 
 import { renderServerSideApp } from './renderServerSideApp';
 
@@ -30,5 +31,12 @@ app.use(
 );
 
 app.use(morgan('tiny'));
+
+app.use(
+  responseTime((_req, res, time) => {
+    res.setHeader('X-Response-Time', time.toFixed(2) + 'ms');
+    res.setHeader('Server-Timing', `renderServerSideApp;dur=${time}`);
+  })
+);
 
 app.use(renderServerSideApp);
