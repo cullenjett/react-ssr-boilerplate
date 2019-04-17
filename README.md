@@ -66,10 +66,10 @@ Sometimes you'll want to make API calls on the server to fetch data **before** r
 
 ## Roadmap
 
-- [] Run server via webpack in dev mode so we can use more loaders
-- [] Intelligently resolve CSS modules by looking for a `.module.s?css` file extension
-- [] Add example app that handles authentication
-- [] Migrate to `react-testing-library` instead of `enzyme`
+- [ ] Run server via webpack in dev mode so we can use more loaders
+- [ ] Intelligently resolve CSS modules by looking for a `.module.s?css` file extension
+- [ ] Add example app that handles authentication
+- [ ] Migrate to `react-testing-library` instead of `enzyme`
 
 ## `cj-scripts`
 
