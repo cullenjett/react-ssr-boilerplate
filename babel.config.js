@@ -6,7 +6,7 @@ module.exports = function(api) {
       '@babel/preset-env',
       {
         targets: {
-          browsers: ['>0.25%', 'ie 11', 'not op_mini all']
+          browsers: ['>1%', 'ie 11', 'not op_mini all']
         }
       }
     ],

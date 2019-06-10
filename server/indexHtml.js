@@ -47,12 +47,12 @@ const jsScripts = bundles => {
   return [...bundleFilePaths, mainJS]
     .map(
       jsFilePath =>
-        `<script type="text/javascript" src="${jsFilePath}"></script>`
+        `<script type="text/javascript" src="${jsFilePath}" defer></script>`
     )
     .join('');
 };
 
-export const indexHtml = ({ helmet, initialState, markup, bundles }) => {
+export const indexHtml = ({ helmet, serverData, markup, bundles }) => {
   const htmlAttrs = helmet.htmlAttributes.toString();
   const bodyAttrs = helmet.bodyAttributes.toString();
 
@@ -62,23 +62,24 @@ export const indexHtml = ({ helmet, initialState, markup, bundles }) => {
       <head>
         ${helmet.title.toString()}
         ${helmet.meta.toString()}
+
         ${preloadScripts(bundles)}
         ${helmet.link.toString()}
         ${cssLinks()}
         ${helmet.style.toString()}
-        ${helmet.script.toString()}
+
         ${helmet.noscript.toString()}
+        ${helmet.script.toString()}
+        ${jsScripts(bundles)}
       </head>
       <body ${bodyAttrs}>
         <div id="root">${markup}</div>
 
         <script>
           window.process = ${env.forIndexHtml};
-          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
-          window.assetManifest = ${JSON.stringify(assetManifest)}
+          window.__SERVER_DATA__ = ${JSON.stringify(serverData)}
+          window.__ASSET_MANIFEST__ = ${JSON.stringify(assetManifest)}
         </script>
-
-        ${jsScripts(bundles)}
       </body>
     </html>
   `;

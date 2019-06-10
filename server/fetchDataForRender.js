@@ -1,30 +1,41 @@
-import url from 'url';
-import { matchPath } from 'react-router-dom';
+import React from 'react';
+import ssrPrepass from 'react-ssr-prepass';
+import chalk from 'chalk';
 
-import { Home } from '../src/components/Home';
+export const fetchDataForRender = (ServerApp, req) => {
+  let dataCache = {};
 
-const ROUTES_THAT_FETCH_DATA = [
-  {
-    path: '/',
-    component: Home,
-    exact: true
-  }
-];
+  return ssrPrepass(
+    <ServerApp dataCache={dataCache} location={req.url} />,
+    element => {
+      if (element && element.type && element.type.fetchData) {
+        return element.type.fetchData(req).then(d => {
+          Object.keys(d).forEach(key => {
+            if (dataCache[key]) {
+              logDuplicateKeyMessage(key, element.type.name);
+            }
+          });
 
-export const fetchDataForRender = (req, store) => {
-  const promises = [];
-
-  ROUTES_THAT_FETCH_DATA.some(route => {
-    const match = matchPath(url.parse(req.url).pathname, route);
-    if (match) {
-      const promise =
-        route.component &&
-        route.component.fetchData &&
-        route.component.fetchData(store, match);
-      promises.push(promise);
+          dataCache = {
+            ...dataCache,
+            ...d
+          };
+        });
+      }
     }
-    return match;
+  ).then(() => {
+    return dataCache;
   });
-
-  return Promise.all(promises);
 };
+
+function logDuplicateKeyMessage(key, component) {
+  /* eslint-disable no-console */
+  console.log('');
+  console.log(
+    chalk.red(
+      `Warning: <${component} /> is overwriting an existing server data value for "${key}".`
+    )
+  );
+  console.log(chalk.red('This can cause unexpected behavior.'));
+  console.log('');
+}

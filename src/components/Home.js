@@ -1,23 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-import { createSession } from '../actions';
+import { api } from '../api';
+import { useServerData } from '../state/serverDataContext';
 
-export class Home extends Component {
-  static fetchData(store) {
-    // Normally you'd pass action creators to "connect" from react-redux,
-    // but since this is a static method you don't have access to "this.props".
+const Home = () => {
+  const serverTodos = useServerData(data => {
+    return data.todos || [];
+  });
+  const [text, setText] = useState('');
+  const [todos, setTodos] = useState(serverTodos);
 
-    // Dispatching actions from "static fetchData()" will look like this (make sure to return a Promise):
-    return store.dispatch(createSession({ id: 1, name: 'Cullen Jett' }));
-  }
+  return (
+    <div>
+      <h1>Home page</h1>
 
-  render() {
-    return (
-      <div>
-        <h1>Home page</h1>
-      </div>
-    );
-  }
-}
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+
+          const newTodo = {
+            text
+          };
+
+          api.todos.create(newTodo).then(res => {
+            setTodos([...todos, res]);
+            setText('');
+          });
+        }}
+      >
+        <label htmlFor="todo">Add a todo</label>
+        <br />
+        <input
+          id="todo"
+          type="text"
+          value={text}
+          autoComplete="off"
+          onChange={e => setText(e.target.value)}
+        />
+      </form>
+
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>{todo.text}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+Home.fetchData = () => {
+  return api.todos.all().then(todos => {
+    return {
+      todos
+    };
+  });
+};
 
 export default Home;

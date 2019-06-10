@@ -1,7 +1,12 @@
 if (browserSupportsAllFeatures()) {
-  require('./main');
+  runMain();
 } else {
-  loadScript(window.assetManifest['polyfills.js'], () => require('./main'));
+  loadScript(window.__ASSET_MANIFEST__['polyfills.js'], runMain);
+}
+
+function runMain() {
+  const { main } = require('./main');
+  main();
 }
 
 function browserSupportsAllFeatures() {

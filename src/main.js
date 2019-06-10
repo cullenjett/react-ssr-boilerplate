@@ -1,23 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
-import App from './App';
-import configureStore from './utils/configureStore';
+import App from './components/App';
 
 import './styles/index.scss';
+import { ServerDataProvider } from './state/serverDataContext';
 
-const store = configureStore(window.__INITIAL_STATE__);
+const dataCache = window.__SERVER_DATA__;
 
-Loadable.preloadReady().then(() => {
-  ReactDOM.hydrate(
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>,
-    document.getElementById('root')
-  );
-});
+export const main = () => {
+  Loadable.preloadReady().then(() => {
+    ReactDOM.hydrate(
+      <ServerDataProvider dataCache={dataCache}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ServerDataProvider>,
+      document.getElementById('root')
+    );
+  });
+};

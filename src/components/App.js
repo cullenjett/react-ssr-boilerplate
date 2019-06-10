@@ -3,18 +3,17 @@ import { Switch, Route, NavLink } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Helmet from 'react-helmet';
 
-import * as metadata from './metadata';
+import * as metadata from '../metadata';
 
 const LoadableHome = Loadable({
-  loader: () => import(/* webpackChunkName: 'home' */ './components/Home'),
+  loader: () => import(/* webpackChunkName: 'home' */ './Home'),
   loading() {
     return <div>Loading...</div>;
   }
 });
 
 const LoadableAbout = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: 'about' */ './components/about/About'),
+  loader: () => import(/* webpackChunkName: 'about' */ './about/About'),
   loading() {
     return <div>Loading...</div>;
   }

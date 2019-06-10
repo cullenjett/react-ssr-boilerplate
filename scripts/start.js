@@ -38,8 +38,6 @@ const HOST = process.env.HOST || '0.0.0.0';
 const isInteractive = process.stdout.isTTY;
 const server = express();
 
-purgeCacheOnChange(path.resolve(__dirname, '../'));
-
 // We need to "inject" the dev middleware higher up in the stack of middlewares,
 // so applyDevMiddleware needs to happen before server.use()
 applyDevMiddleware(server);
@@ -71,6 +69,8 @@ choosePort(HOST, DEFAULT_PORT).then(port => {
     console.log(chalk.white('\n\tStarting dev server...'));
 
     openBrowser(urls.localUrlForBrowser);
+
+    purgeCacheOnChange(path.resolve(__dirname, '../'));
 
     console.log(
       chalk.blue(`

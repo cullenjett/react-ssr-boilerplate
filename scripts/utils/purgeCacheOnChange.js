@@ -3,7 +3,10 @@
 import chokidar from 'chokidar';
 
 export const purgeCacheOnChange = path => {
-  const watcher = chokidar.watch(path);
+  const watcher = chokidar.watch(path, {
+    ignoreInitial: true,
+    ignored: /\/(node_modules|build)\//
+  });
 
   watcher.on('ready', () => {
     watcher.on('all', () => {
