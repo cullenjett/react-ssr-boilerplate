@@ -2,7 +2,9 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import config from '../../config/webpack.config.dev';
+import createConfig from '../../config/webpackConfigFactory';
+
+const config = createConfig('development');
 
 export const applyDevMiddleware = app => {
   const compiler = webpack(config);

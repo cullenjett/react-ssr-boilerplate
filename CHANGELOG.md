@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None
 
+## [4.1.0] - 2019-06-16
+
+### Added
+
+- Resolve CSS modules by looking for `.module.s?css` file extension
+
+### Changed
+
+- Client-side webpack config for dev and prod combined into a factory function
+
 ## [4.0.1] - 2019-06-15
 
 ### Added

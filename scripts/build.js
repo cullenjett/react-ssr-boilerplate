@@ -12,8 +12,9 @@ const {
   printFileSizesAfterBuild
 } = require('react-dev-utils/FileSizeReporter');
 
-const clientConfig = require('../config/webpack.config.prod');
+const createConfig = require('../config/webpackConfigFactory');
 const serverConfig = require('../config/webpack.server.prod');
+const clientConfig = createConfig('production');
 
 process.on('unhandledRejection', err => {
   throw err;

@@ -67,12 +67,11 @@ Adding `redux` takes a few steps, but shouldn't be too painful; start by replaci
 
 ## Current Quirks
 
-- This project does not have a webpack configuration that allows for the use of `url-loader` or `file-loader` (so no `import src from 'my-img.svg'`). Instead it relies on serving static assets via the `public/` directory. See `src/components/about/About.js` for a reference on how to work with assets in your app see.
-- CSS modules are disabled for any files inside `src/styles` -- use this directory for global styles instead. This is set in the webpack config files, so start there if you'd like to change anything.
+- This project does not have a webpack configuration that allows for the use of `url-loader` or `file-loader` (so no `import src from 'my-img.svg'`). Instead it relies on serving static assets via the `public/` directory. See `src/components/about/About.js` for a reference on how to work with assets in your app.
 
 ## Roadmap
 
 - [ ] Run server via webpack in dev mode so we can use more loaders
-- [ ] Intelligently resolve CSS modules by looking for a `.module.s?css` file extension
+- [x] Intelligently resolve CSS modules by looking for a `.module.s?css` file extension
 - [ ] Add example app that handles authentication
 - [ ] Migrate to `react-testing-library` instead of `enzyme`
