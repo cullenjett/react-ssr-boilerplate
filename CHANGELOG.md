@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None
 
+## [4.0.1] - 2019-06-15
+
+### Added
+
+### Changed
+
+- Upgraded `css-loader` to v3 and change webpack config options
+- Dependencies updated
+
+### Fixed
+
+- The correct route is now rendered on the server (I forgot to pass the URL to react router :facepalm:)
+
 ## [4.0.0] - 2019-06-09
 
 ### Added

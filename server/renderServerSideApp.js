@@ -11,27 +11,29 @@ import { indexHtml } from './indexHtml';
 import stats from '../build/react-loadable.json';
 import { ServerDataProvider } from '../src/state/serverDataContext';
 
-const ServerApp = ({ context, dataCache, location }) => (
-  <ServerDataProvider dataCache={dataCache}>
-    <StaticRouter location={location} context={context}>
-      <App />
-    </StaticRouter>
-  </ServerDataProvider>
-);
+const ServerApp = ({ context, dataCache, location }) => {
+  return (
+    <ServerDataProvider dataCache={dataCache}>
+      <StaticRouter location={location} context={context}>
+        <App />
+      </StaticRouter>
+    </ServerDataProvider>
+  );
+};
 
 export const renderServerSideApp = (req, res) => {
   Loadable.preloadAll()
     .then(() => fetchDataForRender(ServerApp, req))
-    .then(data => renderApp(ServerApp, data, res));
+    .then(data => renderApp(ServerApp, data, req, res));
 };
 
-function renderApp(ServerApp, data, res) {
+function renderApp(ServerApp, data, req, res) {
   const context = {};
   const modules = [];
 
   const markup = ReactDOMServer.renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-      <ServerApp dataCache={data} context={context} />
+      <ServerApp location={req.url} dataCache={data} context={context} />
     </Loadable.Capture>
   );
 
