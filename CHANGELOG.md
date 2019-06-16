@@ -5,9 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.0.0] - 2019-06-16
 
-- None
+### Added
+
+- `react-testing-library` replaces `enzyme`
+
+### Removed
+
+- `enzyme`
+
+### Changed
+
+- The `<ServerDataProvider />` context provider wrapper accepts a prop called `value` instead of `serverCache`. Internally, it's context value is now just called `data` vs `dataCache`.
+
+### Fixed
+
+- Jest config no longer runs in a "node" environment
+
+### Security
 
 ## [4.1.0] - 2019-06-16
 

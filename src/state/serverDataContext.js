@@ -5,9 +5,9 @@ const ServerDataContext = React.createContext();
 export const ServerDataProvider = props => {
   const value = useMemo(() => {
     return {
-      dataCache: props.dataCache
+      data: props.value
     };
-  }, [props.dataCache]);
+  }, [props.value]);
 
   return (
     <ServerDataContext.Provider value={value}>
@@ -26,8 +26,8 @@ export const useServerData = fn => {
   }
 
   if (fn) {
-    return fn(context.dataCache);
+    return fn(context.data);
   } else {
-    return context.dataCache;
+    return context.data;
   }
 };

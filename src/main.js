@@ -4,16 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
 
 import App from './components/App';
-
-import './styles/index.scss';
 import { ServerDataProvider } from './state/serverDataContext';
 
-const dataCache = window.__SERVER_DATA__;
+import './styles/index.scss';
+
+const serverData = window.__SERVER_DATA__;
 
 export const main = () => {
   Loadable.preloadReady().then(() => {
     ReactDOM.hydrate(
-      <ServerDataProvider dataCache={dataCache}>
+      <ServerDataProvider value={serverData}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
