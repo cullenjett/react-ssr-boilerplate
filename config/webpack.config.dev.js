@@ -57,7 +57,7 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              camelCase: true,
+              localsConvention: 'camelCase',
               modules: true
             }
           },

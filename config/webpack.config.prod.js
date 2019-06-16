@@ -63,8 +63,8 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-              camelCase: true
+              localsConvention: 'camelCase',
+              modules: true
             }
           },
           {
