@@ -67,6 +67,7 @@ Adding `redux` takes a few steps, but shouldn't be too painful; start by replaci
 
 ## Current Quirks
 
+- There are console message saying "componentWillMount has been renamed, and is not recommended for use." due to the react-loadable package. Hopefully React will support SSR with Suspense soon, but until then react-loadable works great and the console messages should not affect your app.
 - This project does not have a webpack configuration that allows for the use of `url-loader` or `file-loader` (so no `import src from 'my-img.svg'`). Instead it relies on serving static assets via the `public/` directory. See `src/components/about/About.js` for a reference on how to work with assets in your app.
 
 ## Roadmap
