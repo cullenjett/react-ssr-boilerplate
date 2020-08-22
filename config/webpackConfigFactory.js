@@ -8,7 +8,7 @@ const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const { getAppEnv } = require('./env');
@@ -139,18 +139,7 @@ module.exports = function (envType) {
   config.optimization = IS_DEV
     ? {}
     : {
-        minimizer: [
-          new UglifyJsPlugin({
-            parallel: true,
-            sourceMap: true,
-            uglifyOptions: {
-              output: {
-                comments: false,
-              },
-            },
-          }),
-          new OptimizeCSSAssetsPlugin({}),
-        ],
+        minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
       };
 
   config.plugins = [
