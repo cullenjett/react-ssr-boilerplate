@@ -26,8 +26,7 @@
       "npm run lint"
     ],
     "*.{js,json,css,md}": [
-      "npm run format",
-      "git add"
+      "npm run format"
     ]
   },
   "dependencies": {
