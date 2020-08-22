@@ -16,12 +16,12 @@ const { getAppEnv } = require('./env');
 const env = getAppEnv();
 const { PUBLIC_URL = '' } = env.raw;
 
-const resolvePath = relativePath => path.resolve(__dirname, relativePath);
+const resolvePath = (relativePath) => path.resolve(__dirname, relativePath);
 
 /**
  * This function generates a webpack config object for the client-side bundle.
  */
-module.exports = function(envType) {
+module.exports = function (envType) {
   const IS_DEV = envType === 'development';
   const IS_PROD = envType === 'production';
   const config = {};
@@ -33,11 +33,11 @@ module.exports = function(envType) {
   config.entry = IS_DEV
     ? [
         'webpack-hot-middleware/client?path=/__webpack_hmr&reload=true',
-        resolvePath('../src/index.js')
+        resolvePath('../src/index.js'),
       ]
     : {
         polyfills: resolvePath('../src/polyfills.js'),
-        main: resolvePath('../src/index.js')
+        main: resolvePath('../src/index.js'),
       };
 
   config.output = IS_DEV
@@ -45,13 +45,13 @@ module.exports = function(envType) {
         path: resolvePath('../build'),
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js',
-        publicPath: PUBLIC_URL + '/'
+        publicPath: PUBLIC_URL + '/',
       }
     : {
         path: resolvePath('../build'),
         filename: 'static/js/[name].[chunkhash:8].js',
         chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-        publicPath: PUBLIC_URL + '/'
+        publicPath: PUBLIC_URL + '/',
       };
 
   config.module = {
@@ -63,12 +63,12 @@ module.exports = function(envType) {
         use: [
           {
             options: {
-              formatter: eslintFormatter
+              formatter: eslintFormatter,
             },
-            loader: 'eslint-loader'
-          }
+            loader: 'eslint-loader',
+          },
         ],
-        include: resolvePath('../src')
+        include: resolvePath('../src'),
       },
 
       // Babel
@@ -78,8 +78,8 @@ module.exports = function(envType) {
         loader: 'babel-loader',
         options: {
           cacheDirectory: IS_DEV,
-          compact: IS_PROD
-        }
+          compact: IS_PROD,
+        },
       },
 
       // CSS Modules
@@ -92,25 +92,22 @@ module.exports = function(envType) {
           {
             loader: 'css-loader',
             options: {
-              localsConvention: 'camelCase',
-              modules: true
-            }
+              modules: true,
+            },
           },
           {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss',
               plugins: () => [
-                require('postcss-flexbugs-fixes'),
                 autoprefixer({
-                  flexbox: 'no-2009'
-                })
-              ]
-            }
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
           },
           'sass-loader',
-          'import-glob-loader'
-        ].filter(Boolean)
+        ].filter(Boolean),
       },
 
       // CSS
@@ -127,18 +124,16 @@ module.exports = function(envType) {
             options: {
               ident: 'postcss',
               plugins: () => [
-                require('postcss-flexbugs-fixes'),
                 autoprefixer({
-                  flexbox: 'no-2009'
-                })
-              ]
-            }
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
           },
           'sass-loader',
-          'import-glob-loader'
-        ].filter(Boolean)
-      }
-    ].filter(Boolean)
+        ].filter(Boolean),
+      },
+    ].filter(Boolean),
   };
 
   config.optimization = IS_DEV
@@ -150,12 +145,12 @@ module.exports = function(envType) {
             sourceMap: true,
             uglifyOptions: {
               output: {
-                comments: false
-              }
-            }
+                comments: false,
+              },
+            },
           }),
-          new OptimizeCSSAssetsPlugin({})
-        ]
+          new OptimizeCSSAssetsPlugin({}),
+        ],
       };
 
   config.plugins = [
@@ -167,22 +162,22 @@ module.exports = function(envType) {
     IS_DEV && new ErrorOverlayPlugin(),
     IS_PROD &&
       new MiniCssExtractPlugin({
-        filename: 'static/css/[name].[contenthash:8].css'
+        filename: 'static/css/[name].[contenthash:8].css',
       }),
     IS_PROD &&
       new ManifestPlugin({
-        fileName: 'asset-manifest.json'
+        fileName: 'asset-manifest.json',
       }),
     new ReactLoadablePlugin({
-      filename: 'build/react-loadable.json'
-    })
+      filename: 'build/react-loadable.json',
+    }),
   ].filter(Boolean);
 
   config.node = {
     dgram: 'empty',
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
+    tls: 'empty',
   };
 
   return config;
