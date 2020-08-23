@@ -17,19 +17,17 @@ if (cluster.isMaster) {
     cluster.fork();
   }
 
-  cluster.on('exit', worker => {
+  cluster.on('exit', (worker) => {
     console.log(`Worker ${worker.process.pid} died`);
   });
 } else {
-  app.listen(PORT, err => {
+  app.listen(PORT, (err) => {
     if (err) {
       return console.error(err);
     }
 
     console.info(
-      `Server running on port ${PORT} -- Worker pid: ${
-        cluster.worker.process.pid
-      }`
+      `Server running on port ${PORT} -- Worker pid: ${cluster.worker.process.pid}`
     );
   });
 }

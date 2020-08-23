@@ -11,7 +11,7 @@
     "test": "node scripts/test.js",
     "start:prod": "node scripts/startProd.js",
     "lint": "eslint src/**/*.js",
-    "format": "prettier --write \"src/**/*.{js,json,css,md}\"",
+    "format": "prettier --write .",
     "docker:build": "docker build --rm -t cullenjett/react-ssr-boilerplate .",
     "docker:start": "docker run --rm -it -p 3000:3000 cullenjett/react-ssr-boilerplate",
     "docker": "npm run docker:build && npm run docker:start"
@@ -25,7 +25,7 @@
     "*.js": [
       "npm run lint"
     ],
-    "*.{js,json,css,md}": [
+    "*.{js,json,css,scss,md}": [
       "npm run format"
     ]
   },
