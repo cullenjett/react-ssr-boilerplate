@@ -9,30 +9,30 @@ const path = require('path');
 const webpack = require('webpack');
 const {
   measureFileSizesBeforeBuild,
-  printFileSizesAfterBuild
+  printFileSizesAfterBuild,
 } = require('react-dev-utils/FileSizeReporter');
 
 const createConfig = require('../config/webpackConfigFactory');
 const serverConfig = require('../config/webpack.server.prod');
 const clientConfig = createConfig('production');
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   throw err;
 });
 
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
-const resolvePath = relativePath => path.resolve(__dirname, relativePath);
+const resolvePath = (relativePath) => path.resolve(__dirname, relativePath);
 
 measureFileSizesBeforeBuild(resolvePath('../build'))
-  .then(previousFileSizes => {
+  .then((previousFileSizes) => {
     fs.emptyDirSync(resolvePath('../build'));
     return build(previousFileSizes);
   })
   .then(
-    result => printResult(result),
-    err => {
+    (result) => printResult(result),
+    (err) => {
       console.log(chalk.red('Failed to compile.\n'));
       console.log((err.message || err) + '\n');
       process.exit(1);
@@ -53,7 +53,7 @@ function build(previousFileSizes) {
         console.log(chalk.white('✓ Client webpack build complete'));
       }
 
-      serverCompiler.run(err => {
+      serverCompiler.run((err) => {
         if (err) {
           return reject(err);
         } else {
@@ -69,7 +69,7 @@ function build(previousFileSizes) {
         resolve({
           stats,
           previousFileSizes,
-          warnings: messages.warnings
+          warnings: messages.warnings,
         });
       });
     });

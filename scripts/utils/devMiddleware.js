@@ -6,7 +6,7 @@ import createConfig from '../../config/webpackConfigFactory';
 
 const config = createConfig('development');
 
-export const applyDevMiddleware = app => {
+export const applyDevMiddleware = (app) => {
   const compiler = webpack(config);
 
   app.use(
@@ -19,15 +19,15 @@ export const applyDevMiddleware = app => {
         assets: true,
         chunks: false,
         modules: false,
-        hash: false
-      }
+        hash: false,
+      },
     })
   );
 
   app.use(
     webpackHotMiddleware(compiler, {
       path: '/__webpack_hmr',
-      heartbeat: 4000
+      heartbeat: 4000,
     })
   );
 };

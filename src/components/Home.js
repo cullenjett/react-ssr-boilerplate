@@ -4,7 +4,7 @@ import { api } from '../api';
 import { useServerData } from '../state/serverDataContext';
 
 const Home = () => {
-  const serverTodos = useServerData(data => {
+  const serverTodos = useServerData((data) => {
     return data.todos || [];
   });
   const [text, setText] = useState('');
@@ -15,14 +15,14 @@ const Home = () => {
       <h1>Home page</h1>
 
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
 
           const newTodo = {
-            text
+            text,
           };
 
-          api.todos.create(newTodo).then(res => {
+          api.todos.create(newTodo).then((res) => {
             setTodos([...todos, res]);
             setText('');
           });
@@ -35,12 +35,12 @@ const Home = () => {
           type="text"
           value={text}
           autoComplete="off"
-          onChange={e => setText(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
         />
       </form>
 
       <ul>
-        {todos.map(todo => (
+        {todos.map((todo) => (
           <li key={todo.id}>{todo.text}</li>
         ))}
       </ul>
@@ -49,9 +49,9 @@ const Home = () => {
 };
 
 Home.fetchData = () => {
-  return api.todos.all().then(todos => {
+  return api.todos.all().then((todos) => {
     return {
-      todos
+      todos,
     };
   });
 };

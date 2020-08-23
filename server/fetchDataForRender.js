@@ -5,10 +5,10 @@ import chalk from 'chalk';
 export const fetchDataForRender = (ServerApp, req) => {
   let data = {};
 
-  return ssrPrepass(<ServerApp data={data} location={req.url} />, element => {
+  return ssrPrepass(<ServerApp data={data} location={req.url} />, (element) => {
     if (element && element.type && element.type.fetchData) {
-      return element.type.fetchData(req).then(d => {
-        Object.keys(d).forEach(key => {
+      return element.type.fetchData(req).then((d) => {
+        Object.keys(d).forEach((key) => {
           if (data[key]) {
             logDuplicateKeyMessage(key, element.type.name);
           }
@@ -16,7 +16,7 @@ export const fetchDataForRender = (ServerApp, req) => {
 
         data = {
           ...data,
-          ...d
+          ...d,
         };
       });
     }

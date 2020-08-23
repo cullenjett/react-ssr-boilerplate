@@ -6,12 +6,12 @@ import Head from './Head';
 
 const LoadableHome = Loadable({
   loader: () => import(/* webpackChunkName: 'home' */ './Home'),
-  loading: () => <div>Loading...</div>
+  loading: () => <div>Loading...</div>,
 });
 
 const LoadableAbout = Loadable({
   loader: () => import(/* webpackChunkName: 'about' */ './about/About'),
-  loading: () => <div>Loading...</div>
+  loading: () => <div>Loading...</div>,
 });
 
 const App = () => (

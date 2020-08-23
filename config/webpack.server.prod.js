@@ -6,7 +6,7 @@ const { getAppEnv } = require('./env');
 const env = getAppEnv();
 const { PUBLIC_URL = '' } = env.raw;
 
-const resolvePath = relativePath => path.resolve(__dirname, relativePath);
+const resolvePath = (relativePath) => path.resolve(__dirname, relativePath);
 
 if (env.raw.NODE_ENV !== 'production') {
   throw new Error('Production builds must have NODE_ENV=production.');
@@ -16,14 +16,14 @@ module.exports = {
   mode: 'production',
   target: 'node',
   node: {
-    __dirname: true
+    __dirname: true,
   },
   entry: './server/app.js',
   output: {
     path: resolvePath('../build'),
     filename: 'server.js',
     publicPath: PUBLIC_URL + '/',
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -39,12 +39,12 @@ module.exports = {
                 camelCase: true,
                 extensions: ['.css', '.scss'],
                 generateScopedName: '[hash:base64]',
-                ignore: 'src/styles'
-              }
+                ignore: 'src/styles',
+              },
             ],
-            'dynamic-import-node'
-          ]
-        }
+            'dynamic-import-node',
+          ],
+        },
       },
       {
         test: /\.s?css$/,
@@ -54,14 +54,14 @@ module.exports = {
             loader: 'css-loader',
             options: {
               localsConvention: 'camelCase',
-              modules: true
-            }
+              modules: true,
+            },
           },
           'sass-loader',
-          'import-glob-loader'
-        ]
-      }
-    ]
+          'import-glob-loader',
+        ],
+      },
+    ],
   },
-  externals: [nodeExternals()]
+  externals: [nodeExternals()],
 };

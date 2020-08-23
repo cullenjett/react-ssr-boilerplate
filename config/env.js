@@ -14,7 +14,7 @@ function getAppEnv() {
     {
       NODE_ENV: process.env.NODE_ENV,
       PUBLIC_URL: process.env.PUBLIC_URL,
-      VERSION: process.env.VERSION
+      VERSION: process.env.VERSION,
     }
   );
 
@@ -26,16 +26,16 @@ function getAppEnv() {
         env[key] = `process.env.${key}`;
       }
       return env;
-    }, {})
+    }, {}),
   };
 
   const forIndexHtml = JSON.stringify({
-    env: raw
+    env: raw,
   });
 
   return { raw, forIndexHtml, forWebpackDefinePlugin };
 }
 
 module.exports = {
-  getAppEnv
+  getAppEnv,
 };

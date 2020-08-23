@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { imagePath } from '../../utils/assetUtils';
+
 import styles from './about.module.scss';
 
 class About extends Component {
