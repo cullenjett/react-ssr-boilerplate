@@ -1,4 +1,6 @@
-# React Server Side Rendering Boilerplate ⚛️
+# This project is not actively maintained
+
+## React Server Side Rendering Boilerplate ⚛️
 
 Tools like [create-react-app](https://github.com/facebook/create-react-app) have made setting up client-side React apps trivial, but transitioning to SSR is still kind of a pain in the ass. [Next.js](https://nextjs.org) is a powerhouse, and the [Razzle](https://github.com/jaredpalmer/razzle) tool looks like an absolute beast, but sometimes you just want to see the whole enchilada running your app. This is a sample setup for fully featured, server-rendered React applications.
 
